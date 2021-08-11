@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_news_carousel_1,news.carousel,model_news_carousel,base.group_portal,1,1,1,1
+access_news_carousel_2,news.carousel,model_news_carousel,base.group_public,1,1,1,1
+access_news_carousel_3,news.carousel,model_news_carousel,base.group_user,1,1,1,1
+access_news_carousel_4,news.carousel,model_news_carousel,website.group_website_designer,1,1,1,1

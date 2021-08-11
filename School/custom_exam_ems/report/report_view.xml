@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!-- =========DIS Exam Report========= -->
+    <!-- ========================================= -->
+
+    <!-- =========DIS Exam Report========= -->
+    <record id="exam.dis_report_card_id" model="ir.actions.report">
+        <field name="name">Exam Report Card</field>
+        <field name="model">exam.result</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="exam.model_exam_result"/>
+        <field name="report_name">custom_exam_ems.exam_result_report_card</field>
+        <field name="report_file">custom_exam_ems.exam_result_report_card</field>
+    </record>
+    <!-- ========================================= -->
+
+    <!-- ===============Board Standard Result Card============== -->
+        <record id="exam.action_report_exam_result_board_standard" model="ir.actions.report">
+            <field name="name">Board Standard Result Card</field>
+            <field name="model">exam.result</field>
+            <field name="report_type">qweb-html</field>
+            <field name="binding_model_id" ref="exam.model_exam_result"/>
+            <field name="report_name">custom_exam_ems.template_exam_result_card_board_standard</field>
+            <field name="report_file">custom_exam_ems.template_exam_result_card_board_standard</field>
+        </record>
+    <!-- ========================================= -->
+
+    <!-- =======Additional Exam Report====== -->
+    <record id="exam.additional_exam_result_id_qweb" model="ir.actions.report">
+        <field name="name">Additional Exam Result</field>
+        <field name="model">additional.exam.result</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="exam.model_additional_exam_result"/>
+        <field name="report_name">custom_exam_ems.additional_exam_result_report</field>
+        <field name="report_file">custom_exam_ems.additional_exam_result_report</field>
+    </record>
+    <!-- ========================================= -->
+
+    <!-- ======All additional Exam Report===== -->
+    <report id="all_additional_exam_result_id_qweb"
+            string="All Additional Exam Result"
+            model="all.additional.exam.result"
+            report_type="qweb-html"
+            file="custom_exam_ems.all_additional_exam_result_report"
+            name="custom_exam_ems.all_additional_exam_result_report"
+            groups="school.group_school_administration,school.group_school_teacher,school.group_school_student"/>
+    <!-- ========================================= -->
+
+</odoo>

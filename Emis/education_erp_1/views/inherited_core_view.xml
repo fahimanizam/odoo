@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <template id="fav_ico" name="educat Icon" inherit_id="web.layout">
+            <xpath expr="//html/head/title" position="replace">
+                <title>EMIS</title>
+            </xpath>
+        </template>
+         <record id="inherited_core_view" model="ir.ui.view">
+            <field name="name">inherited.core.view</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="openeducat_core.res_config_settings_view_form_core"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="OpenEducat-CE"
+                     string="EMIS"
+                     data-key="openeducat_core"
+                     groups="openeducat_core.group_op_back_office_admin"
+                     id="">
+                    <h2 id="openeducat_core_apps">EMIS Apps</h2>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model='ir.ui.menu' id='openeducat_core.menu_op_school_root'>
+            <field name="name">EMIS</field>
+        </record>
+    </data>
+</odoo>

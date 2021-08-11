@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <template id="student_quiz_result_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="result">
+                <t t-call="web.basic_layout">
+                    <t t-if="result.survey_id.school_id">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <div class="row">
+                                <div class="col-2 ml-3">
+                                    <img t-if="result.survey_id.school_id.company_id.logo"
+                                         t-att-src="'data:image/png;base64,%s' % to_text(result.survey_id.school_id.company_id.logo)"
+                                         style="max-height: 90px;"/>
+                                </div>
+                                <div class="col-8 text-center">
+                                    <h2>
+                                        <span t-field="result.survey_id.school_id.com_name"/>
+                                    </h2>
+                                    <h6>
+                                        <span t-field="result.survey_id.school_id.company_id.street"/>
+                                    </h6>
+                                    <h6>
+                                        <span t-if="result.survey_id.school_id.company_id.email"
+                                              t-esc="'Email: %s' %(result.survey_id.school_id.company_id.email)"/>
+                                        <span t-if="result.survey_id.school_id.company_id.website"
+                                              t-esc="' Web: %s' %(result.survey_id.school_id.company_id.website)"/>
+                                    </h6>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <table width="100%">
+                                <center>
+                                    <h3>Class:
+                                        <span t-field="result.survey_id.standard_id"/>
+                                    </h3>
+                                </center>
+                                <center>
+                                    <h3>Subject:
+                                        <span t-field="result.survey_id.subject_id"/>
+                                    </h3>
+                                </center>
+                                <center>
+                                    <h3>Student:
+                                        <span t-field="result.student_id"/>
+                                    </h3>
+                                    <h4>Roll No:
+                                        <span t-field="result.roll_no"/>
+                                    </h4>
+                                </center>
+                            </table>
+                            <br/>
+                            <br/>
+                            <table width="100%">
+                                <thead>
+                                    <tr>
+                                        <td align="center"
+                                            style="font-family: 'Helvetica';font-size: 18px;border: 2px solid black;">
+                                            <b>Question</b>
+                                        </td>
+                                        <td align="center"
+                                            style="font-family: 'Helvetica';font-size: 18px;border: 2px solid black;">
+                                            <b>Score</b>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <t t-set="total_score" t-value="0"/>
+                                <tbody>
+                                    <t t-foreach="result.user_input_line_ids" t-as="question">
+                                        <tr>
+                                            <td align="center"
+                                                style="font-family: 'Helvetica';font-size: 16px;border: 2px solid black;">
+                                                <span t-field="question.question_id"></span>
+                                            </td>
+                                            <td align="center"
+                                                style="font-family: 'Helvetica';font-size: 16px;border: 2px solid black;">
+                                                <span t-field="question.answer_score"></span>
+                                                <t t-set="total_score" t-value="total_score + question.answer_score"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td align="center"
+                                            style="font-family: 'Helvetica';font-size: 16px;border: 2px solid black;">
+                                            Total Score
+                                        </td>
+                                        <td align="center"
+                                            style="font-family: 'Helvetica';font-size: 16px;border: 2px solid black;">
+                                            <span t-esc="total_score"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

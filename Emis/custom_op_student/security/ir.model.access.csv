@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_op_marksheet_line_student_1,op.marksheet.line,openeducat_exam.model_op_marksheet_line,base.group_portal,1,1,1,0
+access_op_result_line_student_1,op.result.line,openeducat_exam.model_op_result_line,base.group_portal,1,1,1,0
+access_op_assignment_sub_line_portal,access.op.assignment.sub.line,openeducat_assignment.model_op_assignment_sub_line,base.group_portal,1,1,1,0
+access_op_assignment_portal,op.assignment,openeducat_assignment.model_op_assignment,base.group_portal,1,1,1,0

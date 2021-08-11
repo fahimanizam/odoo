@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <!-- Change customer name to Student in odoo/base -->
+        <record model='ir.actions.act_window' id='base.action_partner_customer_form'>
+            <field name="name">Student</field>
+        </record>
+
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="name">Students</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new student in your address book
+              </p><p>
+                Odoo helps you easily track all activities related to a student.
+              </p>
+            </field>
+        </record>
+    </data>
+</odoo>

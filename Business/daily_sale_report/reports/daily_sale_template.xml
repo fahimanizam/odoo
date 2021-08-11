@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="daily_template_id">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <center>
+                            <b>
+                                <h3>Daily Sales Report of Product</h3>
+                            </b>
+                        </center>
+                        <center>
+                            <b>
+                                <span t-esc="date_today"/>
+                            </b>
+                        </center>
+                        <br/>
+                        <table class="table table-bordered" style="border: 1px solid #000;">
+                            <t t-set="total_unit" t-value="0"/>
+                            <t t-set="total_price" t-value="0"/>
+                            <t t-set="counter" t-value="0"/>
+                            <tbody>
+                                <tr>
+                                    <th style="color: #000;text-color: #000;">Product</th>
+                                    <th style="color: #000;text-color: #000;">Quantity</th>
+                                    <th style="color: #000;text-color: #000;">Unit Price</th>
+                                    <th style="color: #000;text-color: #000;">Total Price</th>
+                                </tr>
+                                <tr t-foreach="dailylines" t-as="value">
+                                    <td style="height:5px;color: #000;text-color: #000">
+                                        <t t-esc="request.env['product.product'].search([('id','=',value['pro_name'])]).name"/>
+                                    </td>
+
+                                    <td style="height:5x;color: #000;text-color: #000;">
+                                        <t t-esc="value['product_uom_qty']"/>
+                                    </td>
+
+                                    <td style="height:5px;color: #000;text-color: #000">
+                                        <t t-esc="value['price_unit']"/>
+                                        <t t-set="total_unit" t-value="total_unit + value['price_unit']"/>
+                                    </td>
+                                    <td style="height:5px;color: #000;text-color: #000">
+                                        <t t-esc="value['price_unit']*value['product_uom_qty']"/>
+                                        <t t-set="total_price" t-value="total_price + (value['price_unit']*value['product_uom_qty'])"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Total</b></td>
+                                    <td><span t-esc="total_unit"/></td>
+                                    <td><span t-esc="total_price"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+<!--                    <div class="footer" style="position:absolute; margin: 0px; padding: 0px">-->
+<!--                        <span class="page"/>of-->
+<!--                        <span class="topage"/>-->
+<!--                    </div>-->
+                </t>
+            </t>
+
+        </template>
+
+
+    </data>
+</odoo>

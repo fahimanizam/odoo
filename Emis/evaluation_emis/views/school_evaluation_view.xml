@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action Of Form & Tree Views Of Student Evaluation -->
+    <record id="action_student_evaluation_form" model="ir.actions.act_window">
+        <field name="name">Student Evaluation</field>
+        <field name="res_model">evaluation.emis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type','=','student')]</field>
+        <field name="context">{'default_type':'student','search_default_student_id': active_id}</field>
+    </record>
+
+    <record id="student_evaluation_form_actions" model="ir.actions.act_window">
+        <field name="name">Student Evaluation</field>
+        <field name="res_model">evaluation.emis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type','=','student')]</field>
+        <field name="context">{'default_type':'student','search_default_student_id': active_id}</field>
+    </record>
+
+    <!-- Tree View Of Student Evaluation -->
+    <record id="view_student_evaluation_emis_tree" model="ir.ui.view">
+        <field name="name">evaluation.emis.tree</field>
+        <field name="model">evaluation.emis</field>
+        <field name="arch" type="xml">
+            <tree string="Student Evaluation">
+                <field name="student_id"/>
+                <field name="type"/>
+                <field name="date"/>
+                <field name="total"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View  Of Student Evaluation -->
+    <record id="view_student_eval_search" model="ir.ui.view">
+        <field name="name">evaluation.emis.search</field>
+        <field name="model">evaluation.emis</field>
+        <field name="arch" type="xml">
+            <search string="Student Evaluation Search">
+                <field name="student_id"/>
+                <field name="date"/>
+                <field name="type"/>
+                <newline/>
+                <group expand="1" string="Group By">
+                    <filter string="Type" name="type" context="{'group_by':'type'}"/>
+                    <filter string="Student" name="students" context="{'group_by':'student_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Form View Of Student Evaluation -->
+    <record id="view_student_evaluation_form_1" model="ir.ui.view">
+        <field name="name">evaluation.emis.form.1</field>
+        <field name="model">evaluation.emis</field>
+        <field name="arch" type="xml">
+            <form string="Student Evaluation">
+                <sheet>
+                    <separator string="Student Evaluation"/>
+                    <group>
+                        <group>
+                            <field name="standard_id"/>
+                             <field name="student_id" placeholder="Select Or Create Student Name"/>
+                            <field name="date" style="width: 84%"/>
+<!--                             <field name='active' invisible='1'/>-->
+                        </group>
+                        <group>
+                            <field name="total_attendance"/>
+                            <field name="present"/>
+                        </group>
+                        <group>
+                            <field name="remarks"/>
+                        </group>
+                        <group>
+                             <field name="type" readonly="1"/>
+                             <field name="username"/>
+                             <button name="get_record" type='object' class="oe_inline oe_stat_button">
+                                <img src="/evaluation_emis/static/description/index1.png" alt="Logo"
+                                    style="height:25px;width:50px;float:left;"/>
+                                <lable style="">Get Question</lable>
+                            </button>
+                        </group>
+                    </group>
+                    <newline />
+                    <notebook colspan="4">
+                        <page string="General">
+                            <field name="eval_line_ids" nolabel='1'  context="{'type':type}">
+                                <tree string="Evaluation Line" editable='top'>
+                                    <field name="stu_eval_id" domain="[('type','=',context.get('type'))]" options="{&quot;no_create&quot;: True}"/>
+                                    <field name="point_id" options="{&quot;no_create&quot;: True}"/>
+                                    <field name="rating"/>
+                                </tree>
+                            </field>
+                            <group colspan="4">
+                                <field name="total"/>
+                                <newline/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Teacher Evaluation Form View -->
+    <record id="teacher_evaluation_form" model="ir.ui.view">
+        <field name="name">teacher.evaluation.form</field>
+        <field name="model">evaluation.emis</field>
+        <field name="arch" type="xml">
+            <form name="teacher_evaluation" string="Teacher Evaluation">
+                <sheet>
+                    <separator string="Teacher Evaluation"/>
+                    <group>
+                        <group>
+                            <field name="student_id" required="0" invisible="1"/>
+                            <field name="teacher_id" placeholder="Select Or Create Teacher Name"
+                                    options="{&quot;no_create&quot;: True}"/>
+                            <field name="date" style="width: 84%%"/>
+                        </group>
+                        <group>
+                             <field name="type" readonly="1"/>
+                             <field name="username" readonly="1"/>
+                             <button name="get_record" type='object' class="oe_inline oe_stat_button">
+                                <img src="/evaluation_emis/static/description/index1.png" alt="Logo"
+                                    style="height:25px;width:50px;float:left;"/>
+                                <lable style="">Get Question</lable>
+                            </button>
+                        </group>
+                    </group>
+                    <newline/>
+                    <notebook colspan="4">
+                        <page string="General">
+                            <field name="eval_line_ids" nolabel='1' context="{'type':type}">
+                                <tree string="Evaluation Line" editable='top'>
+                                    <field name="stu_eval_id" domain="[('type','=',context.get('type'))]" options="{&quot;no_create&quot;: True}"/>
+                                    <field name="point_id" options="{&quot;no_create&quot;: True}"/>
+                                    <field name="rating"/>
+                                </tree>
+                            </field>
+                            <group colspan="4">
+                                <field name="total"/>
+                                <newline/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View of Teacher Evaluation -->
+    <record id="view_teacher_evaluation_tree" model="ir.ui.view">
+        <field name="name">teacher.evaluation.tree</field>
+        <field name="model">evaluation.emis</field>
+        <field name="arch" type="xml">
+            <tree name="teacher_evaluation" string="Teacher Evaluation">
+                <field name="teacher_id"/>
+                <field name="type"/>
+                <field name="date"/>
+                <field name="total"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View  Of Student Evaluation -->
+    <record id="view_teacher_eval_search" model="ir.ui.view">
+        <field name="name">faculty.evaluation.search</field>
+        <field name="model">evaluation.emis</field>
+        <field name="arch" type="xml">
+            <search string="Student Evaluation Search">
+                <group colspan="6" col="4">
+                    <field name="teacher_id"/>
+                    <field name="date"/>
+                </group>
+                <separator orientation="vertical"/>
+                <newline />
+                <group expand="0" string="Group By..." colspan="6" col="4">
+                    <filter string="Type" name="type" context="{'group_by':'type'}"/>
+                    <filter string="Teacher" name="student_id" context="{'group_by':'teacher_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+     <record id="action_teacher_eval" model="ir.actions.act_window">
+        <field name="name">Faculty Evaluation</field>
+         <field name="res_model">evaluation.emis</field>
+         <field name="view_mode">tree,form</field>
+         <field name="domain">[('type','=','faculty')]</field>
+         <field name="context">{'default_type':'faculty'}</field>
+         <field name="search_view_id" ref="view_teacher_eval_search"/>
+    </record>
+
+     <record id="action_teacher_eval_new" model="ir.actions.act_window">
+        <field name="name">Teacher Evaluation Finished</field>
+         <field name="res_model">evaluation.emis</field>
+         <field name="view_mode">tree,form</field>
+         <field name="domain">[('type','=','faculty')]</field>
+         <field name="context">{'default_type':'faculty'}</field>
+         <field name="search_view_id" ref="view_teacher_eval_search"/>
+    </record>
+
+    <record id="action_view_teacher_evaluation_tree_new" model="ir.actions.act_window.view">
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_teacher_evaluation_tree" />
+        <field name="act_window_id" ref="action_teacher_eval_new" />
+    </record>
+    <record id="action_view_faculty_evaluation_form_new" model="ir.actions.act_window.view">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="teacher_evaluation_form" />
+        <field name="act_window_id" ref="action_teacher_eval_new" />
+    </record>
+
+    <record id="action_teacher_eval_new_draft" model="ir.actions.act_window">
+        <field name="name">Teacher Evaluation New Draft</field>
+         <field name="res_model">evaluation.emis</field>
+         <field name="view_mode">tree,form</field>
+         <field name="domain">[('type','=','faculty')]</field>
+         <field name="context">{'default_type':'faculty'}</field>
+         <field name="search_view_id" ref="view_teacher_eval_search"/>
+    </record>
+
+    <record id="action_view_teacher_evaluation_tree_new_draft" model="ir.actions.act_window.view">
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_teacher_evaluation_tree" />
+        <field name="act_window_id" ref="action_teacher_eval_new_draft" />
+    </record>
+    <record id="action_view_faculty_evaluation_form_new_draft" model="ir.actions.act_window.view">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="teacher_evaluation_form" />
+        <field name="act_window_id" ref="action_teacher_eval_new_draft" />
+    </record>
+
+    <!-- Student Evaluation Template Search View -->
+    <record id="view_student_eval_temp_search" model="ir.ui.view">
+        <field name="name">evaluation.emis.template.search</field>
+        <field name="model">evaluation.emis.template</field>
+        <field name="arch" type="xml">
+            <search string="Student Evaluation Template Search">
+                <group colspan="4">
+                    <field name="desc"/>
+                </group>
+                <newline />
+                <group expand="0" string="Group By..." colspan="6" col="4">
+                    <filter string="Type" name="type" context="{'group_by':'type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View Of Student Evaluation Template -->
+    <record id="view_student_eval_template_tree" model="ir.ui.view">
+        <field name="name">evaluation.emis.template.tree</field>
+        <field name="model">evaluation.emis.template</field>
+        <field name="arch" type="xml">
+            <tree string="Student Evaluation Template ">
+                <field name="desc"/>
+                <field name="type"/>
+                <field name="category_id" widget="many2one_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View Of Student Evaluation Template -->
+    <record id="view_student_eval_template_form" model="ir.ui.view">
+        <field name="name">evaluation.emis.template.form</field>
+        <field name="model">evaluation.emis.template</field>
+        <field name="arch" type="xml">
+            <form string="Student Evaluation Template">
+                <sheet>
+                    <separator string="Evaluation Template"/>
+                    <group colspan="4">
+                        <field name="desc" placeholder="Enter Description"/>
+                        <field name="type"/>
+                        <field name="category_id" widget="many2one_tags"/>
+                    </group>
+                    <field name="rating_line" nolabel="1" context="{'default_res_id': active_id}">
+                        <tree>
+                            <field name="rating" string="Grade Point"/>
+                            <field name="feedback" string="Letter Grade"/>
+                        </tree>
+                        <form>
+                            <field name="rating"/>
+                            <field name="feedback"/>
+                            <field name="res_id" invisible="1"/>
+                        </form>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Actions Of Form & Tree Views Of Student Evaluation -->
+    <record id="action_student_eval" model="ir.actions.act_window">
+        <field name="name">Student Evaluation</field>
+        <field name="res_model">evaluation.emis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type','=','student')]</field>
+        <field name="context">{'default_type':'student'}</field>
+    </record>
+
+    <!-- Actions Of Form & Tree Views Of Student Evaluation Template -->
+    <record id="action_student_eval_temp" model="ir.actions.act_window">
+        <field name="name">Evaluation Templates</field>
+        <field name="res_model">evaluation.emis.template</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- Actions View of the School Student Tree View -->
+    <record id="action_view_student_evaluation_emis_tree" model="ir.actions.act_window.view">
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_student_evaluation_emis_tree" />
+        <field name="act_window_id" ref="action_student_evaluation_form" />
+    </record>
+
+    <!-- Actions View of the School Student Form View -->
+    <record id="action_view_student_evaluation_form" model="ir.actions.act_window.view">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_student_evaluation_form_1" />
+        <field name="act_window_id" ref="action_student_evaluation_form" />
+    </record>
+
+    <!-- Actions View of the School Teacher Tree View -->
+    <record id="action_view_teacher_evaluation_tree" model="ir.actions.act_window.view">
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_teacher_evaluation_tree" />
+        <field name="act_window_id" ref="action_teacher_eval" />
+    </record>
+
+    <!-- Actions View of the School Teacher Form View -->
+    <record id="action_view_faculty_evaluation_form" model="ir.actions.act_window.view">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="teacher_evaluation_form" />
+        <field name="act_window_id" ref="action_teacher_eval" />
+    </record>
+
+    <record id="action_student_eval_finished" model="ir.actions.act_window">
+        <field name="name">Student Evaluation Finished</field>
+        <field name="res_model">evaluation.emis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type','=','student')]</field>
+        <field name="context">{'default_type':'student'}</field>
+    </record>
+
+    <!-- Actions View of the School Student Tree View -->
+    <record id="action_view_student_evaluation_emis_tree_finished" model="ir.actions.act_window.view">
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_student_evaluation_emis_tree" />
+        <field name="act_window_id" ref="action_student_eval_finished" />
+    </record>
+
+    <!-- Actions View of the School Student Form View -->
+    <record id="action_view_student_evaluation_form_finished" model="ir.actions.act_window.view">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_student_evaluation_form_1" />
+        <field name="act_window_id" ref="action_student_eval_finished" />
+    </record>
+
+    <record id="action_student_eval_draft" model="ir.actions.act_window">
+        <field name="name">Student Evaluation Draft</field>
+        <field name="res_model">evaluation.emis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type','=','student')]</field>
+        <field name="context">{'default_type':'student'}</field>
+    </record>
+
+    <!-- Actions View of the School Student Tree View -->
+    <record id="action_view_student_evaluation_emis_tree_draft" model="ir.actions.act_window.view">
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_student_evaluation_emis_tree" />
+        <field name="act_window_id" ref="action_student_eval_draft" />
+    </record>
+
+    <!-- Actions View of the School Student Form View -->
+    <record id="action_view_student_evaluation_form_draft" model="ir.actions.act_window.view">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_student_evaluation_form_1" />
+        <field name="act_window_id" ref="action_student_eval_draft" />
+    </record>
+
+</odoo>

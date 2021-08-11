@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!--                         survey survey model                  -->
+    <!-- ============================================================ -->
+
+    <record id="school_survey_form" model="ir.ui.view">
+        <field name="name">school.survey.survey.form</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_open']" position="attributes">
+                <attribute name="string">Start QUIZ</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_result_survey']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('quiz_type','=', 'academic'), ('state', '=', 'draft'),
+                    ('answer_done_count', '&lt;=', 0)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_result_survey']" position="after">
+                <button name="%(all_quiz_result)d" string="Print Result" type="action" icon="fa-print"
+                        class="oe_highlight"
+                        attrs="{'invisible': ['|', ('state', '=', 'draft'), ('answer_done_count', '&lt;=', 0), ('quiz_type', '=', 'general')]}"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_survey_user_input_completed']" position="attributes">
+                <attribute name="attrs">{'invisible': [('quiz_type','=', 'academic')]}</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_survey_user_input_completed']" position="after">
+                <button name="%(act_school_survey_user_input_from)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-pencil-square-o">
+                    <field string="Student Answers" name="student_answer_count" widget="statinfo"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//div[@class='oe_title']" position="replace">
+                <div class="oe_title" style="width: 100%;">
+                    <label for="title" class="oe_edit_only"/>
+                    <h1>
+                        <field name="title" placeholder="e.g. Class Quiz"/>
+                    </h1>
+                    <group>
+                        <field name="quiz_type"/>
+                    </group>
+                    <notebook attrs="{'invisible': [('quiz_type', '=', 'general')]}">
+                        <page string="Academic Quiz">
+                            <group>
+                                <label for="school_id"/>
+                                <field name="school_id" placeholder="Give School Name"/>
+                                <group>
+                                    <field name="standard_id"/>
+                                    <field name="subject_id"/>
+                                </group>
+                                <group>
+                                    <field name="quiz_start"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="survey_tree_inherit" model="ir.ui.view">
+        <field name="name">survey.survey.tree.inherit</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='title']" position="after">
+                <field string="Standard" name="standard_id"/>
+                <field string="Subject" name="subject_id"/>
+            </xpath>
+        </field>
+    </record>
+        <record id="survey_kanban_inherit" model="ir.ui.view">
+            <field name="name">survey.survey.kanban.inherit</field>
+            <field name="model">survey.survey</field>
+            <field name="inherit_id" ref="survey.survey_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='row']" position="replace">
+                    <div class="row">
+                        <div class="col-10 p-0 pb-1">
+                            <div class="container o_kanban_card_content mt-2 text-center">
+                                <span class="text-center font-weight-bold" style="font-size:medium;">
+                                    <field name="student_answer_count"/>
+                                </span>
+                                <br/>
+                                <button name="%(act_school_survey_user_input_from)d"
+                                        type="action"
+                                        class="bg-success text-white">Student Answers
+                                </button>
+<!--                                <span class="text-center font-weight-bold bg-success text-white"></span>-->
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    <record id="act_school_survey_view" model="ir.actions.act_window">
+        <field name="res_model">survey.survey</field>
+        <field name="name">Quiz</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('quiz_type','=', 'academic')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Quiz
+            </p>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!--                         survey user input                    -->
+    <!-- ============================================================ -->
+
+    <record id="school_survey_user_input_view_form_inherit" model="ir.ui.view">
+        <field name="name">school.survey.user_input.form</field>
+        <field name="model">survey.user_input</field>
+        <field name="inherit_id" ref="survey.survey_user_input_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_print_answers']" position="after">
+                <button name="%(student_quiz_result)d" string="Print Result" type="action" icon="fa-print"
+                        class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//field[@name='survey_id']" position="before">
+                <field name="standard_id"/>
+                <field name="roll_no"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="student_id"/>
+                <field name="is_student"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="school_survey_user_input_line_view_form_inherit" model="ir.ui.view">
+        <field name="name">school.survey.user_input.line.form</field>
+        <field name="model">survey.user_input.line</field>
+        <field name="inherit_id" ref="survey.survey_user_input_line_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='answer_type']" position="after">
+                <field name="file"/>
+            </xpath>
+            <xpath expr="//field[@name='value_text_box']" position="after">
+                <field name="file" colspan='2' attrs="{'invisible': [('answer_type','!=','upload_file')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="school_survey_user_input_view_tree" model="ir.ui.view">
+        <field name="name">school.survey.user_input.tree</field>
+        <field name="model">survey.user_input</field>
+        <field name="inherit_id" ref="survey.survey_user_input_view_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="replace">
+                <field name="standard_id"/>
+                <field name="student_id"/>
+            </xpath>
+            <xpath expr="//field[@name='email']" position="replace">
+                <field name="roll_no"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="act_school_survey_user_input_from" model="ir.actions.act_window">
+        <field name="res_model">survey.user_input</field>
+        <field name="name">Answers</field>
+        <field name="domain">[('is_student','=',True)]</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!--                    survey question model                     -->
+    <!-- ============================================================ -->
+
+
+    <!-- ============================================================ -->
+    <!--                         survey menu item                     -->
+    <!-- ============================================================ -->
+
+    <!--    <menuitem id="school_quiz" name="Additional Exams" parent="exam.menu_exam" sequence="108"/>-->
+
+    <menuitem id="menu_survey_form_1" name="Quiz" parent="school.menu_ems" sequence="5"/>
+
+    <menuitem action="act_school_survey_view" id="menu_school_survey" name="Quiz" parent="menu_survey_form_1"
+              sequence="41"/>
+
+    <menuitem action="act_school_survey_user_input_from" id="menu_school_survey_user_input" name="Quiz Answer"
+              parent="menu_survey_form_1" sequence="41"/>
+
+</odoo>

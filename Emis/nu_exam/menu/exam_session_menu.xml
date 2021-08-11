@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!--                   Exam Session Menu Action                   -->
+    <!-- ============================================================ -->
+
+    <record id="act_exam_session_view" model="ir.actions.act_window">
+        <field name="res_model">exam.session</field>
+        <field name="name">Academic Session</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Academic Session
+            </p>
+        </field>
+    </record>
+
+    <!-- ==================Student Input Menu Action================== -->
+
+    <record id="act_student_input_view" model="ir.actions.act_window">
+        <field name="res_model">student.input</field>
+        <field name="name">Student Input</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add your file
+            </p>
+        </field>
+    </record>
+
+    <!-- ===========================end============================== -->
+
+
+    <!-- ============================================================ -->
+    <!--                    Exam Session Menu Item                    -->
+    <!-- ============================================================ -->
+
+    <menuitem id="exam_session_menu" name="Nu Answer Script" parent="openeducat_core.menu_op_school_root"/>
+
+    <menuitem action="act_exam_session_view" id="exam_session_action_menu" name="Academic Session" parent="exam_session_menu"
+              sequence="41"/>
+    <!-- ======================Student Input Item====================== -->
+
+    <menuitem action="act_student_input_view" id="menu_student_input" name="Student Answer" parent="exam_session_menu"
+              sequence="42"/>
+
+    <!-- ===========================end============================== -->
+
+</odoo>

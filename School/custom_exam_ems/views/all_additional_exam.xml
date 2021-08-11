@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- All exam report -->
+        <!-- Actions Of Form & Tree Views Of Additional Result Information -->
+        <record id="action_all_exam_form" model="ir.actions.act_window">
+            <field name="name">All Exam Results</field>
+            <field name="res_model">all.additional.exam.result</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- ========================================= -->
+
+        <!-- Menu Item Of Additional Exam Result -->
+        <menuitem id="menu_all_exam_result" name="All Additional Exam Results" sequence="105"
+                  action="action_all_exam_form"
+                  parent="exam.additional_exam"/>
+        <!-- ========================================= -->
+
+        <!-- Search View Of Additional Result -->
+        <record id="all_additional_exam_result_search" model="ir.ui.view">
+            <field name="name">all.additional.exam.result_search</field>
+            <field name="model">all.additional.exam.result</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="student_id"/>
+                    <field name="standard_id"/>
+                    <group expand="1" string="Group By">
+                        <filter name="student" string="Student" help="By Name" domain="[]"
+                                context="{'group_by':'student_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter name="standard" string="Standard" help="By Name" domain="[]"
+                                context="{'group_by':'standard_id'}"/>
+                        <separator orientation="vertical"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <!-- ========================================= -->
+
+        <!-- Tree view of all additional exam -->
+        <record id="all_additional_exam_result_tree" model="ir.ui.view">
+            <field name="name">all.additional.exam.result.tree</field>
+            <field name="model">all.additional.exam.result</field>
+            <field name="arch" type="xml">
+                <tree string="Additional Exam Results of Student">
+                    <field name="student_id"/>
+                    <field name="standard_id"/>
+                    <field name="roll_no"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        -->
+
+        <record id="all_additional_exam_result_form" model="ir.ui.view">
+            <field name="name">all.additional.exam.result.form</field>
+            <field name="model">all.additional.exam.result</field>
+            <field name="arch" type="xml">
+                <form string="Results">
+                    <sheet>
+                        <group string="Result Information" col="4">
+                            <field name="standard_id"/>
+                            <field name="student_id" domain="[('standard_id','=',standard_id)]"/>
+                            <field name="roll_no"/>
+                            <notebook colspan="4">
+                                <page string="Exam Info">
+                                    <field name="additional_exam_result">
+                                        <tree string="student info" delete="false" create="false" edible="top">
+                                            <field name="a_exam_id" options="{&quot;no_create&quot;: True}"/>
+                                            <field name="subject_id"/>
+                                            <field name="obtain_marks"/>
+                                            <field name="result"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- ========================================= -->
+
+        <!-- Additional exam report -->
+        <record id="inherited_view_additional_exam_result_form" model="ir.ui.view">
+            <field name="name">inherited.additional.exam.result.form</field>
+            <field name="model">additional.exam.result</field>
+            <field name="inherit_id" ref="exam.view_additional_exam_result_form"/>
+            <field name="arch" type="xml">
+                <xpath position="replace" expr="//form">
+                    <form string="Results">
+                        <sheet>
+                            <group col="2" string="Result Information">
+                                <field name="standard_id" widget="selection"/>
+                                <field name="a_exam_id" domain="[('standard_id','=',standard_id)]"
+                                       options="{&quot;no_create&quot;: True}"/>
+                                <field name="subject_id"/>
+                            </group>
+                            <group col="4" string="Student Information" colspan="4">
+                                <field name="student_id" domain="[('standard_id','=',standard_id),('state','=','done')]"
+                                       context="{'a_exam':a_exam_id}"
+                                       options="{&quot;no_create&quot;: True}"/>
+                                <field name="roll_no_id"/>
+                                <field name="standard_id" string="Class"/>
+                            </group>
+                            <group col="4" string="Result Information" colspan="4">
+                                <field name="obtain_marks"/>
+                                <field name="result"/>
+                                <field name='active' invisible='1'/>
+                            </group>
+                        </sheet>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+        <!-- ========================================= -->
+
+    </data>
+</odoo>

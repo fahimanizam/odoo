@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!--                   News Carousel Menu Action                  -->
+    <!-- ============================================================ -->
+
+    <record id="act_news_carousel_view" model="ir.actions.act_window">
+        <field name="res_model">news.carousel</field>
+        <field name="name">News Carousel</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a news
+            </p>
+        </field>
+    </record>
+
+    <!-- ===========================end============================== -->
+
+
+    <!-- ============================================================ -->
+    <!--                    News Carousel Menu Item                   -->
+    <!-- ============================================================ -->
+
+    <menuitem id="news_carousel_menu" name="News Carousel" parent="website.menu_website_configuration"
+            groups="website.group_website_designer"/>
+
+    <menuitem action="act_news_carousel_view" id="news_carousel_item" name="News Carousel"
+              parent="news_carousel_menu"/>
+
+    <!-- ===========================end============================== -->
+
+</odoo>

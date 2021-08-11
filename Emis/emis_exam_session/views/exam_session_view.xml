@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!--                  Exam Session model info                     -->
+    <!-- ============================================================ -->
+
+    <record id="exam_session_form" model="ir.ui.view">
+        <field name="name">exam.session.form</field>
+        <field name="model">exam.session</field>
+        <field name="arch" type="xml">
+            <form string="Academic Session">
+                <header>
+                    <button name="active_exam_session" class="oe_stat_button fa fa-check" states="draft"
+                            string="Active Academic Session" type="object"/>
+                    <button name="done_exam_session" states="active" string="Done" type="object"/>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                </header>
+                <sheet>
+                    <separator string="Academic Session Details" colspan="4"/>
+                    <group col="4" colspan="4">
+                        <field name="name" placeholder="Academic Session Name" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Description"
+                               attrs="{'readonly':[('state','!=','draft')]}"
+                               options="{&quot;no_create&quot;: True, &quot;no_search&quot;: True}"/>
+                    </group>
+                    <notebook>
+                        <page string="Answer Submission Details">
+                            <field name="student_input_ids" readonly="1">
+                                <tree string="Student Input">
+                                    <field name="name"/>
+                                    <field name="nu_roll_no"/>
+                                    <field name="nu_reg_no"/>
+                                    <field name="department_name"/>
+                                    <field name="course_code"/>
+                                    <field name="attachment" widget="binary"/>
+                                    <!--                                    <field name="student_image" widget="image" class="oe_avatar oe_left"-->
+                                    <!--                                           style="max-width:50px;max-height:40px;"/>-->
+                                    <!--                                    <field name="student_id_image" widget="image" class="oe_avatar oe_left"-->
+                                    <!--                                           style="max-width:50px;max-height:40px;"/>-->
+                                    <field name="state" select="1" widget="badge" decoration-info="state in ('draft')"
+                                           decoration-success="state in ('active','done')"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="exam_session_tree" model="ir.ui.view">
+        <field name="name">exam.session.tree</field>
+        <field name="model">exam.session</field>
+        <field name="arch" type="xml">
+            <tree string="Academic Session">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="state" select="1" widget="badge" decoration-info="state in ('draft')"
+                       decoration-success="state in ('active','done')"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    <record id="exam_session_kanban" model="ir.ui.view">-->
+    <!--        <field name="name">exam.session.kanban</field>-->
+    <!--        <field name="model">exam.session</field>-->
+    <!--        <field name="arch" type="xml">-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <!-- ===========================end============================== -->
+
+
+</odoo>

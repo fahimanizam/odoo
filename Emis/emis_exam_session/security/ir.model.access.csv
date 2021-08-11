@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_exam_session_1,exam.session,model_exam_session,openeducat_core.group_op_back_office,1,1,1,1
+access_exam_session_2,exam.session,model_exam_session,openeducat_core.group_op_faculty,1,1,1,0
+access_exam_session_3,exam.session,model_exam_session,base.group_portal,1,1,1,0
+access_exam_session_4,exam.session,model_exam_session,base.group_public,1,1,1,0
+access_student_input_1,student.input,model_student_input,openeducat_core.group_op_back_office,1,1,1,1
+access_student_input_2,student.input,model_student_input,openeducat_core.group_op_faculty,1,1,1,0
+access_student_input_3,student.input,model_student_input,base.group_portal,1,1,1,0
+access_student_input_4,student.input,model_student_input,base.group_public,1,1,1,0

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="template_student_input">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure mb-4 mt-4">
+                    <div class="container mt-4" style="border-radius: 25px;">
+                        <!--action="/create/submission"-->
+                        <form id="submission_form" action="" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" id="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="card">
+                                <h5 class="card-header text-center bg-secondary mt-2" style="border-radius: 25px;">
+                                    <strong>Exam Paper Submission Form</strong>
+                                </h5>
+                                <div class="card-body">
+                                    <div class="row d-flex">
+                                        <div class="col-10 align-self-center">
+                                            <div class="form-group row">
+                                                <label for="exam_session_id" class="col-sm-4 col-form-label">Academic
+                                                    Session
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <select name="exam_session_id" id="exam_session_id"
+                                                            class="form-control" required="true">
+                                                        <option value="">None</option>
+                                                        <t t-foreach="exam_session_ids" t-as="exam_session_id">
+                                                            <option t-att-value="exam_session_id.id">
+                                                                <t t-esc="exam_session_id.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="college_name" class="col-sm-4 col-form-label">College Name
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="college_name" id="college_name"
+                                                           class="form-control"
+                                                           placeholder="College Name" required="true"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="semester_name" class="col-sm-4 col-form-label">Semester
+                                                    Name
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="semester_name" id="semester_name"
+                                                           class="form-control"
+                                                           placeholder="Semester Name" required="true"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <input type="file" name="admit_card" id="admit_card"
+                                                       class="dropify form-control"
+                                                       data-height="125" data-allowed-file-extensions="jpg jpeg png"
+                                                       required="true"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row d-flex">
+                                        <div class="col-10 align-self-center">
+                                            <div class="form-group row">
+                                                <label for="department_name" class="col-sm-4 col-form-label">Department
+                                                    Name
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="department_name" id="department_name"
+                                                           class="form-control"
+                                                           placeholder="Department Name" required="true"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="course_name" class="col-sm-4 col-form-label">Course Name
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="course_name" id="course_name"
+                                                           class="form-control"
+                                                           placeholder="Course Name" required="true"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="course_code" class="col-sm-4 col-form-label">Course Code
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="course_code" id="course_code"
+                                                           class="form-control"
+                                                           placeholder="Course Code" required="true"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title py-2">
+                                        <strong>Your Info</strong>
+                                    </h5>
+                                    <hr/>
+                                    <div class="row d-flex">
+                                        <div class="col-10 align-self-center">
+                                            <div class="form-group row">
+                                                <label for="name" class="col-sm-4 col-form-label">Student Name
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="name" id="name"
+                                                           class="form-control"
+                                                           placeholder="Student Name" required="true"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="nu_roll_no" class="col-sm-4 col-form-label">Nu Roll No
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input type="number" name="nu_roll_no" id="nu_roll_no"
+                                                           class="form-control"
+                                                           placeholder="Nu Roll No" required="true"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="nu_reg_no" class="col-sm-4 col-form-label">Nu Registration
+                                                    No
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input type="number" name="nu_reg_no" id="nu_reg_no"
+                                                           class="form-control"
+                                                           placeholder="Nu Registration No" required="true"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!--                                            <span class="text-danger">Student Image</span>-->
+                                            <div class="form-group">
+                                                <input type="file" name="student_image" id="student_image"
+                                                       placeholder="Student Image"
+                                                       class="dropify form-control"
+                                                       data-height="125" data-allowed-file-extensions="jpg jpeg png"
+                                                       required="true"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title py-2">
+                                        <strong>Attach Your Answer</strong>
+                                    </h5>
+                                    <hr/>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group row">
+                                                <label for="attachment" class="col-sm-3 col-form-label">Attach Your
+                                                    Answer
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input type="file" name="attachment" class="dropify form-control"
+                                                           placeholder="Attach Your File"
+                                                           multiple="true"
+                                                           data-height="250"
+                                                           data-show-upload="true"
+                                                           data-show-caption="true" lass="file" data-show-preview="true"
+                                                           id="attachment_id"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-success pull-right" id="done_submit"
+                                            name="done_submit"
+                                            style="border-radius: 25px;">
+                                        SUBMIT
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <record id="submission_message" model="website.page">
+        <field name="name">Submission Message</field>
+        <field name="type">qweb</field>
+        <field name="url">/submission-message</field>
+        <field name="website_indexed" eval="False"/>
+        <field name="is_published">True</field>
+        <field name="key">emis_exam_session.submission_message</field>
+        <field name="arch" type="xml">
+            <t name="Submission Message" t-name="emis_exam_session.submission_message">
+                <t t-call="website.layout">
+                    <div id="wrap">
+                        <div class="container mt-4">
+                            <t t-if="status==True">
+                                <h1>Successfully Submitted!</h1>
+                            </t>
+                            <t t-else="">
+                                <h1>Error!</h1>
+                            </t>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <t t-if="status==True">
+                                        <div class="alert alert-success" role="status">
+                                            <t t-esc="message"/>
+                                            <!--Your Application Has Been Submitted Successfully.-->
+                                        </div>
+                                    </t>
+                                    <t t-else="">
+                                        <div class="alert alert-danger" role="status">
+                                            <t t-esc="message"/>
+                                            <!--Your Application Has Been Submitted Successfully.-->
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+
+
+</odoo>

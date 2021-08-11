@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Changed roll_no field in student form -->
+        <record id="inherited_pview_student_student_form_1" model="ir.ui.view">
+            <field name="name">inherited.view.student.student.form.1</field>
+            <field name="model">student.student</field>
+            <field name="inherit_id" ref="school.view_student_student_form_1"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='roll_no']" position="replace">
+                    <field name="roll_no" help="Roll number of Student"/>
+                </xpath>
+                <xpath expr="//field[@name='student_code']" position="before">
+                    <field name="pid"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- ========================================= -->
+
+    </data>
+</odoo>

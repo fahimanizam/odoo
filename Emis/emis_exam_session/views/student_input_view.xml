@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- ============================================================ -->
+    <!--                         Student input                        -->
+    <!-- ============================================================ -->
+
+    <record id="student_input_form" model="ir.ui.view">
+        <field name="name">student.input.form</field>
+        <field name="model">student.input</field>
+        <field name="arch" type="xml">
+            <form string="Student Input">
+                <header>
+                    <button name="active_submit" class="oe_stat_button fa fa-check" states="draft"
+                            string="Active Input" type="object"/>
+                    <button name="done_submit" states="active" string="Done" type="object"/>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                </header>
+                <sheet>
+                    <separator string="Student Answer" colspan="4"/>
+                    <group col="4" colspan="4">
+                    <field name="student_image" widget="image" attrs="{'readonly':[('state','!=','draft')]}" class="oe_avatar oe_left" style="max-width:100px;max-height:117px;"/>
+                    <field name="admit_card" widget="image" attrs="{'readonly':[('state','!=','draft')]}" class="oe_avatar oe_left" style="max-width:100px;max-height:117px;"/>
+                    </group>
+                    <group col="4" colspan="4">
+                        <field name="name" placeholder="Student Name" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="nu_roll_no" placeholder="Nu Roll No" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="nu_reg_no" placeholder="Nu Registration No" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+                    <group col="4" colspan="4">
+                        <field name="exam_session_id" placeholder="Academic Session" options="{&quot;no_create&quot;: True, &quot;no_search&quot;: True}"/>
+                        <field name="college_name" placeholder="Department Name" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="department_name" placeholder="Department Name" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+                    <group col="4" colspan="4">
+                        <field name="semester_name" placeholder="Semester" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="course_name" placeholder="Course Code" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="course_code" placeholder="Course Code" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+                    <group>
+                       <field name="attachment" placeholder="Attach Your File" widget="binary"
+                               attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="student_input_tree" model="ir.ui.view">
+        <field name="name">student.input.tree</field>
+        <field name="model">student.input</field>
+        <field name="arch" type="xml">
+            <tree string="Student Input">
+                <field name="name"/>
+                <field name="exam_session_id"/>
+                <field name="department_name"/>
+                <field name="course_code"/>
+                <field name="nu_roll_no"/>
+                <field name="nu_reg_no"/>
+                <field name="attachment" widget="binary"/>
+<!--                <field name="student_image" widget="image" class="oe_avatar oe_left" style="max-width:50px;max-height:40px;"/>-->
+<!--                <field name="student_id_image" widget="image" class="oe_avatar oe_left" style="max-width:50px;max-height:40px;"/>-->
+                <field name="state" select="1" widget="badge" decoration-info="state in ('draft')"
+                       decoration-success="state in ('active','done')"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ===========================end============================== -->
+
+
+
+</odoo>

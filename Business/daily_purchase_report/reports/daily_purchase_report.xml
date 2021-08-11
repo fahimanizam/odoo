@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+                id="daily_purchase_pdf_reportid"
+                model="daily.purchase"
+                report_type="qweb-pdf"
+                string=" Daily Purchase Report"
+                name="daily_purchase_report.daily_purchase_template_id"
+                file="daily_purchase_report.daily_purchase_template_id"
+        />
+
+    </data>
+</odoo>

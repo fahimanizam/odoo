@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!--                      Nu Quiz model info                      -->
+    <!-- ============================================================ -->
+
+    <record model="ir.ui.view" id="nu_quiz_question_form">
+        <field name="name">nu.quiz.question.form</field>
+        <field name="model">nu.quiz.question</field>
+        <field name="arch" type="xml">
+            <form string="Quiz Question" create="false">
+                <field name="is_page" invisible="1"/>
+                <field name="page_id" invisible="1" required="False"/>
+                <field name="nu_quiz_id" invisible="1"/>
+                <field name="sequence" invisible="1"/>
+                <sheet>
+                    <div class="oe_title" style="width: 100%;">
+                        <label for="question" string="Section" attrs="{'invisible': [('is_page', '=', False)]}"/>
+                        <label for="question" string="Question" attrs="{'invisible': [('is_page', '=', True)]}"/>
+                        <separator />
+                        <field name="question" colspan="4"/>
+                        <field name="question_marks" colspan="4"/>
+                        <separator />
+                        <field name="description" colspan="4"/>
+                        <separator />
+                        <field name="questions_selection" invisible="1"/>
+                    </div>
+                    <group class="o_label_nowrap" attrs="{'invisible': ['|', ('is_page', '=', False), ('questions_selection', '=', 'all')]}">
+                        <field name="random_questions_count"/>
+                    </group>
+                    <group attrs="{'invisible': [('is_page', '=', True)]}">
+                        <group>
+                            <field name="question_type" widget="radio" attrs="{'required': [('is_page', '=', False)]}" />
+                        </group>
+                        <group>
+                            <div class="col-lg-6 offset-lg-3 o_preview_questions">
+                                <!-- Multiple Lines Text Zone -->
+                                <div attrs="{'invisible': [('question_type', '!=', 'text_box')]}">
+                                        <i class="fa fa-align-justify fa-4x" role="img" aria-label="Multiple lines" title="Multiple Lines"/>
+                                </div>
+                                <!-- Multiple choice: only one answer -->
+                                <div attrs="{'invisible': [('question_type', '!=', 'simple_choice')]}" role="img" aria-label="Multiple choice with one answer" title="Multiple choice with one answer">
+                                    <div class="row"><i class="fa fa-circle-o  fa-lg"/> answer</div>
+                                    <div class="row"><i class="fa fa-dot-circle-o fa-lg"/> answer</div>
+                                    <div class="row"><i class="fa fa-circle-o  fa-lg"/> answer</div>
+                                </div>
+                                <!-- Multiple choice: multiple answers allowed -->
+                                <div attrs="{'invisible': [('question_type', '!=', 'multiple_choice')]}" role="img" aria-label="Multiple choice with multiple answers" title="Multiple choice with multiple answers">
+                                    <div class="row"><i class="fa fa-square-o fa-lg"/> answer</div>
+                                    <div class="row"><i class="fa fa-check-square-o fa-lg"/> answer</div>
+                                    <div class="row"><i class="fa fa-square-o fa-lg"/> answer</div>
+                                </div>
+                            </div>
+                        </group>
+                    </group>
+<!--                    <notebook>-->
+<!--                        <page string="Answers" name="answers" attrs="{'invisible': [('is_page', '=', True)]}">-->
+<!--                            <group attrs="{'invisible': [('question_type', 'not in', ['simple_choice', 'multiple_choice', 'matrix'])]}">-->
+<!--                                <field name="suggested_answer_ids" string="Answers" context="{'default_question_id': active_id}">-->
+<!--                                    <tree editable="bottom">-->
+<!--                                        <field name="sequence" widget="handle"/>-->
+<!--                                        <field name="value" string="Choices"/>-->
+<!--                                        <field name="value_image" options="{'accepted_file_extensions': 'image/*'}"-->
+<!--                                            attrs="{'column_invisible': ['|', ('parent.allow_value_image', '=', False), ('parent.question_type', '=', 'matrix')]}"/>-->
+<!--                                        <field name="is_correct" attrs="{'column_invisible': ['|', ('parent.scoring_type', '=', 'no_scoring'), ('parent.question_type', '=', 'matrix')]}"/>-->
+<!--                                        <field name="answer_score" attrs="{'column_invisible': ['|', ('parent.scoring_type', '=', 'no_scoring'), ('parent.question_type', '=', 'matrix')]}"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--                            </group>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="nu_quiz_question_tree" model="ir.ui.view">
+        <field name="name">nu.quiz.question.tree</field>
+        <field name="model">nu.quiz.question</field>
+        <field name="arch" type="xml">
+            <tree string="Quiz" create="false">
+                <field name="sequence" widget="handle"/>
+                <field name="question"/>
+                <field name="nu_quiz_id"/>
+                <field name="question_type"/>
+                <field name="triggering_question_id" invisible="1"/>
+                <button icon="fa-code-fork" attrs="{'invisible': [('triggering_question_id', '=', False)]}"
+                    title="This question depends on another question's answer." class="icon_rotates"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    <record id="exam_session_kanban" model="ir.ui.view">-->
+    <!--        <field name="name">exam.session.kanban</field>-->
+    <!--        <field name="model">exam.session</field>-->
+    <!--        <field name="arch" type="xml">-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <!-- ===========================end============================== -->
+
+
+</odoo>

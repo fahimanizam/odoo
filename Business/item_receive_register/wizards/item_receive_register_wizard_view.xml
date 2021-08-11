@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="odoo_item_receive_register_form" model="ir.ui.view">
+            <field name="name">Item Receive Register</field>
+            <field name="model">item.receive.register</field>
+            <field name="arch" type="xml">
+                <form string="Item Receive Register">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                                <field name="categ_id" widget="many2many"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Data">
+                                <field name="itemreceivelines">
+                                    <tree>
+                                        <field name="categ"/>
+                                        <field name="product_name"/>
+                                        <field name="qty"/>
+                                        <field name="odate"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button name="item_receive_print_pdf"
+                                type="object"
+                                string="Print Pdf"
+                                class="oe_highlight"/>
+                        <button name="item_receive_preview"
+                                type="object"
+                                string="Preview"
+                                class="oe_highlight"/>
+                        <button special="cancel"
+                                string="Cancel"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="item_receive_pdf_action">
+            <field name="name">Item Receive Register</field>
+            <field name="res_model">item.receive.register</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="odoo_item_receive_register_form"/>
+        </record>
+
+        <menuitem id="item_register_menu"
+                  name="Item Receive Register"
+                  parent="purchase.purchase_report"
+                  groups="purchase.group_purchase_manager"
+                  action="item_receive_pdf_action"/>
+
+    </data>
+</odoo>

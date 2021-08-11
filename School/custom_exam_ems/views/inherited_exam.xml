@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ===============Add board_standard field in school standard form=============== -->
+        <record id="inherited_view_school_standard_form" model="ir.ui.view">
+            <field name="name">inherited.school.standard.form</field>
+            <field name="model">school.standard</field>
+            <field name="inherit_id" ref="school.view_school_standard_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='remaining_seats']" position="after">
+                    <field name="board_standard"/>
+                    <field name="ssc_standard" attrs="{'invisible':[('board_standard','=',False)]}"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- ========================================= -->
+
+        <!-- =============Remove sba_marks field and added several fields in exam result form============== -->
+        <record id="inherited_view_exam_result_form" model="ir.ui.view">
+            <field name="name">inherited.exam.result.form</field>
+            <field name="model">exam.result</field>
+            <field name="inherit_id" ref="exam.view_exam_result_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sba_marks']" position="replace">
+                    <field name="sba_marks" attrs="{'column_invisible':[('parent.board_standard','=',True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='terms']" position="before">
+                    <field name="mcq_marks" attrs="{'column_invisible':[('parent.ssc_standard','=',False)]}"/>
+                    <field name="cq_marks" attrs="{'column_invisible':[('parent.ssc_standard','=',False)]}"/>
+                    <field name="practical_marks" attrs="{'column_invisible':[('parent.ssc_standard','=',False)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='grade_line_id']" position="before">
+                    <field name="gpa"/>
+                </xpath>
+                <xpath expr="//field[@name='terms']" position="replace">
+                    <field name="terms"
+                                   attrs="{'readonly':['|',('state','in',['confirm','re-evaluation','re-evaluation_confirm','done']),('parent.ssc_standard','=',True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='standard_id']" position="after">
+                    <field name="board_standard"/>
+                    <field name="ssc_standard"/>
+                </xpath>
+
+            </field>
+        </record>
+        <!-- ========================================= -->
+
+    </data>
+</odoo>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <template id="additional_exam_result_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="result">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <br/>
+                        <br/>
+                        <table width="100%">
+                            <center>
+                                <h3 t-field="result.a_exam_id.name"></h3>
+                            </center>
+                            <br/>
+                            <tr>
+                                <td width="20%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>Student Name</b>
+                                </td>
+                                <td width="5%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>:</b>
+                                </td>
+                                <td width="25%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <span t-field="result.sudo().student_id.name"></span>
+                                </td>
+                                <td width="20%"></td>
+                                <td width="5%"></td>
+                                <td width="25%"></td>
+                            </tr>
+                            <tr>
+                                <td width="20%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>Roll No</b>
+                                </td>
+                                <td width="5%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>:</b>
+                                </td>
+                                <td width="25%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <span t-field="result.student_id.roll_no"></span>
+                                </td>
+                                <td align="left" width="20%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>Standard</b>
+                                </td>
+                                <td align="left" width="5%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>:</b>
+                                </td>
+                                <td align="left" width="25%" style="font-family: 'Helvetica';font-size: 16px;">
+                                    <span t-field="result.standard_id.standard_id"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="20%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>Medium</b>
+                                </td>
+                                <td width="5%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>:</b>
+                                </td>
+                                <td width="25%" style="font-family: 'Helvetica';font-size: 16px;">
+                                    <span t-field="result.student_id.medium_id.name"></span>
+                                </td>
+                                <td width="20%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>Division</b>
+                                </td>
+                                <td width="5%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>:</b>
+                                </td>
+                                <td width="25%" style="font-family: 'Helvetica';font-size: 16px;">
+                                    <span t-field="result.student_id.division_id.name"></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <table width="100%">
+                            <thead>
+                                <tr>
+                                    <td align="center" style="font-family: 'Helvetica';font-size: 18px;border: 1px solid black;">
+                                        <b>Subject Name</b>
+                                    </td>
+                                    <td align="center" style="font-family: 'Helvetica';font-size: 18px;border: 1px solid black;">
+                                        <b>Maximum marks</b>
+                                    </td>
+                                    <td align="center" style="font-family: 'Helvetica';font-size: 18px;border: 1px solid black;">
+                                        <b>Minimum Marks</b>
+                                    </td>
+                                    <td align="center" style="font-family: 'Helvetica';font-size: 18px;border: 1px solid black;">
+                                        <b>Obtain Mark</b>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center" style="font-family: 'Helvetica';font-size: 16px;border: 1px solid black;">
+                                        <span t-field="result.a_exam_id.subject_id.name"></span>
+                                    </td>
+                                    <td align="center" style="font-family: 'Helvetica';font-size: 16px;border: 1px solid black;">
+                                        <span t-field="result.a_exam_id.subject_id.maximum_marks"></span>
+                                    </td>
+                                    <td align="center" style="font-family: 'Helvetica';font-size: 16px;border: 1px solid black;">
+                                        <span t-field="result.a_exam_id.subject_id.minimum_marks"></span>
+                                    </td>
+                                    <td align="center" style="font-family: 'Helvetica';font-size: 16px;border: 1px solid black;">
+                                        <span t-field="result.obtain_marks"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <table width="100%">
+                            <tr>
+                                <td width="10%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>Result</b>
+                                </td>
+                                <td width="5%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <b>:</b>
+                                </td>
+                                <td width="85%" style="font-family: 'Helvetica';font-size: 18px;">
+                                    <span t-field="result.result"></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-sm table-bordered mb-1"
+                                                   style="border:1px solid black; font-size:small;">
+                                                <thead style="border:1px solid black;">
+                                                    <tr style="border:1px solid black;">
+                                                        <th style="border:1px solid black;" colspan="2">Class Teachers
+                                                            Name:
+                                                            <span t-field="result.standard_id.user_id"/>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="border:1px solid black;">
+                                                    <tr style="border:1px solid black;">
+                                                        <td style="border:1px solid black;">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input"/>
+                                                                <span>Promoted to Grade</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border:1px solid black;">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input"/>
+                                                                <span>To Repeat</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <t t-set="vice_principal_signature" t-value=""/>
+                                                    <t t-set="founder_principal_signature" t-value=""/>
+                                                    <t t-set="principal_signature" t-value=""/>
+
+                                                    <tr style="border:1px solid black;">
+                                                        <td style="border:1px solid black;" rowspan="2"
+                                                            class="align-middle">
+                                                            <span>Vice Principal's Signature:</span>
+                                                            <img t-if="vice_principal_signature"
+                                                                 t-att-src="'data:image/png;base64,%s' % to_text(vice_principal_signature)"
+                                                                 style="max-height: 50px;" class="float-right"/>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="align-middle">
+                                                            <span>Founder Principal's Signature:</span>
+                                                            <img t-if="founder_principal_signature"
+                                                                 t-att-src="'data:image/png;base64,%s' % to_text(founder_principal_signature)"
+                                                                 style="max-height: 25px;" class="float-right"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:1px solid black;" class="align-middle">
+                                                            <span>Principal's Signature:</span>
+                                                            <img t-if="principal_signature"
+                                                                 t-att-src="'data:image/png;base64,%s' % to_text(principal_signature)"
+                                                                 style="max-height: 25px;" class="float-right"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:1px solid black;" class="align-middle">
+                                                            <strong>Parent's Signature:</strong>
+                                                        </td>
+                                                        <td style="border:1px solid black;">
+                                                            <strong>Next Term Begins on:</strong>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

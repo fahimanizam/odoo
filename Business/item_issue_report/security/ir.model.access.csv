@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_odoo_item_issue_salesman,odoo.item.issue,model_odoo_item_issue,sales_team.group_sale_salesman,1,1,1,0
+access_odoo_item_issue_manager,odoo.item.issue,model_odoo_item_issue,sales_team.group_sale_manager,1,1,1,1
+access_item_issue_template_salesman,item.issue.template,model_item_issue_template,sales_team.group_sale_salesman,1,1,1,0
+access_item_issue_template_manager,item.issue.template,model_item_issue_template,sales_team.group_sale_manager,1,1,1,1

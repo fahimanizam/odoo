@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="daily_sales_statement_template_id">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+
+                <style>
+                    .table, .table td, .table th {
+                    border: 1px solid #ddd;
+                    text-align: left;
+                    }
+
+                    .table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    }
+
+                    .table th, .table td {
+                    padding: 5px;
+                    }
+
+                    .total{
+                    border: 1px solid #000;
+                    position:absolute;
+                    width: fit-content;
+                    padding: 10px;
+                    right: 15px;
+                    }
+                </style>
+
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <center>
+                        <b>
+                            <h3>Daily Sales Statement</h3>
+                        </b>
+                    </center>
+                    <center>
+                        <b>
+                            <span t-esc="start_date"/>
+                            To
+                            <span t-esc="end_date"/>
+                        </b>
+                    </center>
+                    <br/>
+                    <t t-set="total_inv" t-value="0"/>
+                    <t t-set="total_rec" t-value="0"/>
+                    <t t-set="total_due" t-value="0"/>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Inv/MR</th>
+                                <th>Partner Name</th>
+                                <th>Cash</th>
+                                <th>Bank</th>
+                                <th>Inv. Amount</th>
+                                <th>Due</th>
+                            </tr>
+                            <t t-foreach="data.keys()" t-as="user">
+                                <tr t-foreach="data[user]" t-as="order">
+                                    <td>
+                                        <span t-esc="order[1]" t-options='{"widget": "date"}'/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="order[0]"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="order[2]"/>
+                                    </td>
+                                    <td>
+                                        <t t-if="order[3]">
+                                            <span t-esc="order[3]"/>
+                                            <t t-set="total_rec" t-value="total_rec + order[3]"/>
+                                            <!-- <span t-esc="' '.join(order[3])"/>-->
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-if="order[4]">
+                                            <span t-esc="order[4]"/>
+                                            <t t-set="total_rec" t-value="total_rec + order[4]"/>
+                                            <!--                                            <span t-esc="' '.join(order[4])"/>-->
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <span t-esc="order[5]"/>
+                                        <t t-set="total_inv" t-value="total_inv + order[5]"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="order[6]"/>
+                                        <t t-set="total_due" t-value="total_due + order[6]"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </thead>
+                    </table>
+
+                    <div class="total">
+                        <b>Total Inv. Amount</b>
+                        <b>:</b>
+                        <span t-esc="total_inv"/>
+                        <br/>
+                        <b>Total Rec. Amount</b>
+                        <b>:</b>
+                        <span t-esc="total_rec"/>
+                        <br/>
+                        <b>Total Due Amount</b>
+                        <b>:</b>
+                        <span t-esc="total_due"/>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

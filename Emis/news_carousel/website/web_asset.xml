@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="assets_frontend" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/news_carousel/static/src/css/news_carousel.css"/>
+            <link rel="stylesheet" href="/news_carousel/static/src/css/google_font.css"/>
+            <script type="text/javascript" src="/news_carousel/static/src/js/breakingNews.js"/>
+            <script type="text/javascript" src="/news_carousel/static/src/js/theme.js"/>
+        </xpath>
+    </template>
+
+</odoo>

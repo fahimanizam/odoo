@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+<!--        <menuitem id="menu_emis_evaluation"-->
+<!--                  parent="menu_op_exam_root"-->
+<!--                  sequence="32"-->
+<!--                  name="Evaluation"/>-->
+
+        <menuitem id="openeducat_core.menu_op_school_root"
+              name="Emis"
+              sequence="10"
+              web_icon="openeducat_core,static/description/icon.png"
+              groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin,evaluation_emis.group_op_student"/>
+
+        <!-- Menu Items of Student and Teacher Evaluation -->
+        <menuitem id="menu_emis_evaluation"
+                  name="Evaluations"
+                  parent="openeducat_core.menu_op_school_root"/>
+
+        <menuitem id="menu_evals"
+                  name="Student Evaluation"
+                  parent="menu_emis_evaluation"
+                  action="action_student_eval"
+                  sequence="9"/>
+        <menuitem id="menu_teacher_eval"
+                  name="Teacher Evaluation"
+                  parent="menu_emis_evaluation"
+                  action="action_teacher_eval"
+                  sequence="10"/>
+        <menuitem id="menu_eval_temps"
+                  name="Evaluation Templates"
+                  parent="menu_emis_evaluation"
+                  action="action_student_eval_temp"
+                  sequence="11"/>
+
+    </data>
+</odoo>

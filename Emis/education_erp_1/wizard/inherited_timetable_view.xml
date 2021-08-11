@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+
+        <!--Student educational view view-->
+        <record id="generate_timetable_inherit" model="ir.ui.view">
+            <field name="name">generate.timetable.view.inherit</field>
+            <field name="model">generate.time.table</field>
+            <field name="inherit_id" ref="openeducat_timetable.view_generate_time_table_form"/>
+            <field name="priority" eval="9"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='course_id']" position="replace">
+                    <field name="faculty"/>
+                    <field name="department_id" domain="[('faculty_id','=',faculty)]"/>
+                    <field name="course_id" domain="[('department_id','=',department_id)]"/>
+                </xpath>
+                <xpath expr="//button[@name='act_gen_time_table']" position="after">
+                    <button string="Preview"
+                            type="object"
+                            name="onchange_batch_id"
+                            class="oe_highlight"/>
+<!--                    <button string="create"-->
+<!--                            type="object"-->
+<!--                            name="update"-->
+<!--                            class="oe_highlight"/>-->
+                </xpath>
+            </field>
+        </record>
+
+<!--        <record id = "update" model = "ir.actions.server">-->
+<!--        <field name = "sequence" eval = "5"/>-->
+<!--        <field name = "name">update_session</field>-->
+<!--        <field name = "model_id" ref = "act_open_generate_time_table_view_form"/>-->
+<!--        <field name = "condition">True</field>-->
+<!--        <field name = "type">ir.actions.server</field>-->
+<!--        <field name = "state">code</field>-->
+<!--        <field name = "code">-->
+<!--        pos_obj = env['generate.time.table'].browse(context.get('active_id'))-->
+<!--        pos_obj._update_tree()-->
+<!--        </field>-->
+<!--    </record>-->
+
+        <record id="gen_time_table_line_inherit" model="ir.ui.view">
+            <field name="name">gen.time.table.line.inherit</field>
+            <field name="model">gen.time.table.line</field>
+            <field name="inherit_id" ref="openeducat_timetable.view_gen_time_table_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='faculty_id']" position="replace">
+                    <field name="department_id"/>
+                    <field name="faculty_id" domain="[('department_id','=',department_id)]"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

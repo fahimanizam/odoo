@@ -1,0 +1,134 @@
+<odoo>
+    <data>
+
+        <!--Student educational view view-->
+        <record id="student_educational_view_inherit" model="ir.ui.view">
+            <field name="name">student.educational.view.inherit</field>
+            <field name="model">op.student</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_student_form"/>
+            <field name="priority" eval="9"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='gr_no']" position="replace">
+                    <field name="board_roll_number"/>
+                    <field name="roll_number"/>
+                    <field name="registration_number"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Student search view-->
+        <record id="student_search_view_inherit" model="ir.ui.view">
+            <field name="name">student.search.view.inherit</field>
+            <field name="model">op.student</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_student_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="roll_number"/>
+                    <field name="registration_number"/>
+                </xpath>
+                <xpath expr="//search" position="inside">
+                    <filter string="Alumni" name="inactive" domain="[('active', '=', False)]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Student course tree view-->
+        <record id="student_course_tree_view_inherit" model="ir.ui.view">
+            <field name="name">student.course.tree.view.inherit</field>
+            <field name="model">op.student.course</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_student_course_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='roll_number']" position="replace">
+
+                </xpath>
+            </field>
+        </record>
+
+        <!--Student course form view-->
+        <record id="student_course_form_view_inherit" model="ir.ui.view">
+            <field name="name">student.course.form.view.inherit</field>
+            <field name="model">op.student.course</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_student_course_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='roll_number']" position="replace">
+
+                </xpath>
+            </field>
+        </record>
+
+        <!--Student course search view-->
+        <record id="student_course_search_view_inherit" model="ir.ui.view">
+            <field name="name">student.course.search.view.inherit</field>
+            <field name="model">op.student.course</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_student_course_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='roll_number']" position="replace">
+
+                </xpath>
+            </field>
+        </record>
+
+
+        <!--Student view 2-->
+        <record id="student_view_inherit" model="ir.ui.view">
+            <field name="name">student.view.inherit</field>
+            <field name="model">op.student</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_student_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//widget[@name='web_ribbon']" position="replace">
+                    <widget name="web_ribbon"
+                            title="Alumni"
+                            bg_color="bg-success"
+                            attrs="{'invisible': [('active', '=', True)]}"/>
+                </xpath>
+                <xpath expr="//button[@name='create_student_user']" position="after">
+                    <button name="toggle_active"
+                            string="Alumni"
+                            type="object"
+                            class="oe_highlight"
+                            icon="fa-archive"
+                            attrs="{'invisible': [('active', '=', False)]}">
+                        <field name="active" widget="web_ribbon" options='{"terminology": "Archive"}'/>
+                    </button>
+                    <button name="toggle_active"
+                            string="Current Student"
+                            type="object"
+                            class="oe_highlight"
+                            icon="fa-archive"
+                            attrs="{'invisible': [('active', '=', True)]}">
+                        <field name="active" widget="web_ribbon" options='{"terminology": "Archive"}'/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Student tree view -->
+<!--        <record id="student_kanban_view_inherit" model="ir.ui.view">-->
+<!--            <field name="name">student.kanban.view.inherit</field>-->
+<!--            <field name="model">op.student</field>-->
+<!--            <field name="inherit_id" ref="openeducat_core.kanban_view_student"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                                <xpath expr="/kanban" position="attributes">-->
+<!--                                    <attribute name="create">True</attribute>-->
+<!--                                    <attribute name="editable"></attribute>-->
+<!--                                </xpath>-->
+
+<!--            </field>-->
+<!--        </record>-->
+
+
+        <!-- Student view Admission details section-->
+        <!--        <record id="student_admission_view_inherit" model="ir.ui.view">-->
+        <!--            <field name="name">student.admission.view.inherit</field>-->
+        <!--            <field name="model">op.student</field>-->
+        <!--            <field name="inherit_id" ref="openeducat_core.view_op_student_form"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//field[@name='roll_number']" position="replace">-->
+        <!--                    <field name="roll_number"/>-->
+        <!--                    <field name="registration_number"/>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+    </data>
+</odoo>

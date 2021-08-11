@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_event_stage,event.stage,event.model_event_stage,school.group_school_administration,1,1,1,1
+access_event_stage1,event.stage,event.model_event_stage,school.group_school_parent,1,0,0,0
+access_event_stage2,event.stage,event.model_event_stage,school.group_school_student,1,0,0,0
+access_event_stage3,event.stage,event.model_event_stage,school.group_school_teacher,1,1,1,0
+
+access_event_event_ticket,event.event.ticket,event.model_event_event_ticket,school.group_school_administration,1,1,1,1
+access_event_event_ticket1,event.event.ticket,event.model_event_event_ticket,school.group_school_parent,1,0,0,0
+access_event_event_ticket2,event.event.ticket,event.model_event_event_ticket,school.group_school_student,1,0,0,0
+access_event_event_ticket3,event.event.ticket,event.model_event_event_ticket,school.group_school_teacher,1,1,1,0

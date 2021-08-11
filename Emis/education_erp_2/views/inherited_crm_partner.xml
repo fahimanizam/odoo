@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inherited_crm_case_tree_view_oppor" model="ir.ui.view">
+            <field name="name">inherited.crm.tree.view.oppr</field>
+            <field name="model">crm.lead</field>
+            <field name="priority">1000</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="replace">
+                    <field name="user_id" string="Collections Person" widget="many2one_avatar_user" optional="show"
+                           domain="[('share', '=', False)]"/>
+                </xpath>
+                <xpath expr="//field[@name='team_id']" position="replace">
+                    <field name="team_id" string="Collections Team" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="inherited_view_crm_case_opportunities_filter" model="ir.ui.view">
+            <field name="name">inherited.crm.lead.search.opportunity</field>
+            <field name="model">crm.lead</field>
+            <field name="priority">15</field>
+            <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id" operator="child_of" string="Customer" filter_domain="[
+                        '|', '|', '|',
+                        ('partner_id', 'ilike', self),
+                        ('partner_name', 'ilike', self),
+                        ('email_from', 'ilike', self),
+                        ('contact_name', 'ilike', self)]"/>
+
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="sales_team.sales_team_config_action" model="ir.actions.act_window">
+        <field name="name">Collections Teams</field>
+        </record>
+        <!-- Change CRM menu name -->
+        <record model='ir.ui.menu' id='crm.res_partner_menu_customer'>
+            <field name="name">Students</field>
+        </record>
+
+        <record model='ir.ui.menu' id='crm.crm_menu_root'>
+            <field name="name">STRM</field>
+        </record>
+
+        <!-- Change sales team menu -->
+        <record model='ir.ui.menu' id='crm.crm_team_config'>
+            <field name="name">Collections Teams</field>
+        </record>
+
+        <record model='ir.ui.menu' id='crm.crm_menu_sales'>
+            <field name="name">Collections</field>
+        </record>
+
+        <!--        <menuitem-->
+        <!--                id="crm.res_partner_menu_customer"-->
+        <!--                name="Students"-->
+        <!--                parent="crm.crm_menu_sales"-->
+        <!--                action="base.action_partner_form"-->
+        <!--                sequence="5"/>-->
+
+
+        <!--        <menuitem-->
+        <!--                id="crm.crm_menu_root"-->
+        <!--                name="STRM"-->
+        <!--                web_icon="crm,static/description/icon.png"-->
+        <!--                groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"-->
+        <!--                sequence="6"/>-->
+
+    </data>
+</odoo>

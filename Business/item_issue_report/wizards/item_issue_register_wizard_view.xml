@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="odoo_item_issue_form" model="ir.ui.view">
+            <field name="name">Item Issue Register</field>
+            <field name="model">odoo.item.issue</field>
+            <field name="arch" type="xml">
+                <form string="Item Issue Register">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                                <field name="categ_id" widget="many2many"
+                                       options="{'no_open': False, 'no_create': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Data">
+                                <field name="itemlines">
+                                    <tree>
+                                        <field name="categ"/>
+                                        <field name="product_name"/>
+                                        <field name="qty"/>
+                                        <field name="odate"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer >
+                        <button name="item_issue_print_pdf"
+                                type="object"
+                                string="Print Pdf"
+                                class="oe_highlight"/>
+                        <button name="item_issue_preview"
+                                type="object"
+                                string="Preview"
+                                class="oe_highlight"/>
+                        <button special="cancel"
+                                string="Cancel"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="item_issue_pdf_action">
+            <field name="name">Item Issue Register</field>
+            <field name="res_model">odoo.item.issue</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="odoo_item_issue_form"/>
+        </record>
+
+        <menuitem id="item_issue_menu"
+                  name="Item Issue Register"
+                  parent="sale.menu_sale_report"
+                  groups="sales_team.group_sale_manager"
+                  action="item_issue_pdf_action"/>
+
+    </data>
+</odoo>

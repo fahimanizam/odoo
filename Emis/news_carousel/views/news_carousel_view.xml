@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!--                  News Carousel model info                    -->
+    <!-- ============================================================ -->
+
+    <record id="news_carousel_form" model="ir.ui.view">
+        <field name="name">news.carousel.form</field>
+        <field name="model">news.carousel</field>
+        <field name="arch" type="xml">
+            <form string="News Details">
+                <header>
+
+                </header>
+                <sheet>
+                    <separator string="News Details" colspan="4"/>
+                    <group col="4" colspan="4">
+                        <field name="news_headings" placeholder="News headings...."/>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Description"
+                               options="{&quot;no_create&quot;: True, &quot;no_search&quot;: True}"/>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="news_carousel_tree" model="ir.ui.view">
+        <field name="name">news.carousel.tree</field>
+        <field name="model">news.carousel</field>
+        <field name="arch" type="xml">
+            <tree string="Academic Session">
+                <field name="news_headings"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    <record id="news_carousel_kanban" model="ir.ui.view">-->
+    <!--        <field name="name">news.carousel.kanban</field>-->
+    <!--        <field name="model">news.carousel</field>-->
+    <!--        <field name="arch" type="xml">-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <!-- ===========================end============================== -->
+
+
+</odoo>

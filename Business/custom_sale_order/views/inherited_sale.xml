@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- sale template -->
+        <record id="view_quotation_inherit" model="ir.ui.view">
+            <field name="name">sale.order.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="priority">4</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='create_date']" position="replace">
+                    <field name="create_date" string="Creation Date" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- // -->
+
+    </data>
+</odoo>

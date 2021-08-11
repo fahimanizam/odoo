@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <report id="all_quiz_result"
+            string="Quiz Result"
+            model="survey.survey"
+            report_type="qweb-html"
+            file="quiz.quiz_result_report"
+            name="quiz.quiz_result_report"
+            groups="school.group_school_administration,school.group_school_teacher,school.group_school_student"/>
+    <report id="student_quiz_result"
+            string="Student Quiz Result"
+            model="survey.user_input"
+            report_type="qweb-html"
+            file="quiz.student_quiz_result_report"
+            name="quiz.student_quiz_result_report"
+            groups="school.group_school_administration,school.group_school_teacher,school.group_school_student"/>
+</odoo>

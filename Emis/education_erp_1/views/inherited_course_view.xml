@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <!-- The department option has been added in the faculty form-->
+        <record id="course_view_inherit" model="ir.ui.view">
+            <field name="name">course.view.inherit</field>
+            <field name="model">op.course</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_course_form"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//field[@name='department_id']" position="replace">-->
+<!--                    <field name="department_id"/>-->
+<!--                </xpath>-->
+
+                <xpath expr="//group[@name='subject']" position="replace">
+                    <group string="Department wise Subject" name="subject">
+                        <field name="subject_ids" nolabel="1" domain="[('department_id','=',department_id)]"/>
+<!--                        context="{'group_by':'department_id'}"-->
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        <record model='ir.ui.menu' id='openeducat_core.menu_op_faculty_main'>-->
+        <!--            <field name="name">Faculty Members</field>-->
+        <!--        </record>-->
+
+        <!--        <record model='ir.actions.act_window' id='openeducat_core.act_open_op_faculty_view'>-->
+        <!--            <field name="name">Faculty Members</field>-->
+        <!--        </record>-->
+
+        <!--        <record model='ir.ui.menu' id='openeducat_core.menu_op_faculty_root'>-->
+        <!--            <field name="name">Faculty Members</field>-->
+        <!--        </record>-->
+
+    </data>
+</odoo>

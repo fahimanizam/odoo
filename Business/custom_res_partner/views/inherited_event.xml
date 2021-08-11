@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Changed roll_no field in student form -->
+        <record id="inherited_view_event_form" model="ir.ui.view">
+            <field name="name">inherited.event.event.form</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event.view_event_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="replace">
+                    <field name="user_id" domain="[('share', '=', False)]" attrs="{'readonly': [('id', '!=', False)]}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- // -->
+<!--                            <button name="%(event.act_event_registration_from_event)d"-->
+<!--                                    type="action"-->
+<!--                                    context="{'search_default_expected': True}"-->
+<!--                                    class="oe_stat_button"-->
+<!--                                    icon="fa-users"-->
+<!--                                    help="Total Registrations for this Event">-->
+
+
+    </data>
+</odoo>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="classic_identity_card">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="height: 2px;">
+                        <div class="oe_structure"/>
+                        <br/>
+                        <t t-foreach="o" t-as="student">
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div style="width: 250px; height: 397px; background-image: url(/student_id_card/static/src/img/id-card-front-transparent.png); background-size: cover;">
+                                        <img t-if="student.school_id.company_id.logo"
+                                             t-att-src="'data:image/png;base64,%s' % to_text(student.school_id.company_id.logo)"
+                                             style="position: absolute; display: flex; width: 50px; height: 50px; margin-left: 20px;"
+                                        />
+                                        <img t-if="student.photo"
+                                             t-att-src="'data:image/png;base64,%s' % to_text(student.photo)"
+                                             style="z-index: -1; margin-top: 73px; margin-left: 76px; display: flex; position: absolute; width: 99px; height: 113px; background-color: #424242; -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"
+                                        />
+                                        <div style="position: absolute; margin-top: 220px; width: 250px">
+                                            <div class="text-center" style="width: 100%">
+                                                <h5 t-field="student.full_name" style="color: #339adf"/>
+                                            </div>
+                                            <div style="width: 100%; margin: 15px 20px 0px; color: grey; font-family: 'Josefin Slab', Helvetica, Arial, sans-serif; font-size: .8em">
+                                                <table>
+                                                    <tr>
+                                                        <th>Student ID</th>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <span t-field="student.pid"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Class</th>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <span t-field="student.standard_id"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Phone</th>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <span t-field="student.phone"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Academic Year</th>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <span t-field="student.year.name"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Blood Group</th>
+                                                        <td>:</td>
+                                                        <td>
+                                                            <span t-field="student.blood_group"/>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div style="width: 250px; height: 397px; background-image: url(/student_id_card/static/src/img/id-card-back.png); background-size: cover;">
+
+                                        <div style="width: 100%; padding: 50px 30px 0px; color: white; font-family: 'Josefin Slab', Helvetica, Arial, sans-serif; font-size: .8em">
+                                            <span>
+                                                    <i class="fa fa-map-marker"></i>
+                                                    <t t-set="full_address" t-value="student.school_id.get_full_address(student.school_id.street, student.school_id.street2, student.school_id.city, student.school_id.zip, student.school_id.country_id.name)"/>
+                                                    <t t-esc="full_address"/>
+                                                </span>
+                                            <br/>
+                                            <span>
+                                                    <i class="fa fa-phone"></i>
+                                                    <t t-esc="student.school_id.company_id.phone"/>
+                                                </span>
+                                            <br/>
+                                            <span>
+                                                    <i class="fa fa-envelope"></i>
+                                                    <t t-esc="student.school_id.company_id.email"/>
+                                                </span>
+                                            <br/>
+                                            <span>
+                                                    <i class="fa fa-globe"></i>
+                                                    <t t-esc="student.school_id.company_id.website"/>
+                                                </span>
+
+                                        </div>
+
+
+                                        <div style="width: 100%; text-align: center; color: white; padding-top: 40px;">
+                                            <strong style="border-top: 2px solid white">Signature</strong>
+                                        </div>
+
+<!--                                        <div-->
+<!--                                                style="text-align: center; padding-top: 150px; color: gray; font-family: 'Josefin Slab', Helvetica, Arial, sans-serif; font-size: .7em">-->
+<!--                                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', 'dis', 50, 50)" style="width:50px;height:50px;"/>-->
+<!--                                        </div>-->
+                                        <div
+                                                style="text-align: center; padding-top: 140px; color: gray; font-family: 'Josefin Slab', Helvetica, Arial, sans-serif; font-size: .7em">
+<!--                                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', 568243222, 600, 100)"-->
+<!--                                        style="width:350px;height:60px;"/>-->
+                                            <p>
+                                                [Validity depends on Academic Year]
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

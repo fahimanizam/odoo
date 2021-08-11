@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <report id="report_student_card"
+                name="evaluation_emis.student_evaluation_card"
+                model="evaluation.emis"
+                string="Evaluation Card"
+                report_type="qweb-html"
+                />
+</odoo>

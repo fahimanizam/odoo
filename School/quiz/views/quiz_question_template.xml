@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A page -->
+    <template id="survey.question_container" name="Survey: question container">
+        <t t-set="display_question"
+           t-value="survey.questions_layout == 'page_per_question'
+                    or (survey.questions_layout == 'one_page' and not question.is_conditional)
+                    or (survey.questions_layout == 'page_per_section' and (not question.is_conditional or triggering_answer_by_question[question.id] in selected_answers))"/>
+
+        <t t-set="answer_lines"
+           t-value="answer.user_input_line_ids.filtered(lambda line: line.question_id == question)"/>
+        <!--Use Key selection if number of choices is < 26 to keep Z for other choice if any-->
+        <t t-set="letters" t-value="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>
+        <t t-set="useKeySelection"
+           t-value="len(question.suggested_answer_ids) &lt; len(letters) and survey.questions_layout == 'page_per_question'"/>
+        <!-- Extra 'right' margin is added on layouts that are not "page_per_question" to align with choices questions, since all choices have a mr-2 class (pixel perfect yay...) -->
+        <t t-set="extra_right_margin"
+           t-value="survey.questions_layout != 'page_per_question' and question.question_type not in ['simple_choice', 'multiple_choice']"/>
+        <div
+            t-att-class="'js_question-wrapper pb-4 %s %s' % ('d-none' if not display_question else '', 'mr-2' if extra_right_margin else '')"
+            t-att-id="question.id" t-att-data-required="question.constr_mandatory"
+            t-att-data-constr-error-msg="question.constr_error_msg"
+            t-att-data-validation-error-msg="question.validation_error_msg">
+            <div class="mb-4">
+                <h3 t-if="not hide_question_title">
+                    <span t-field='question.title'/>
+                    <span t-if="question.constr_mandatory" class="text-danger">*</span>
+                </h3>
+                <div t-if="not is_html_empty(question.description)" t-field='question.description'
+                     class="text-muted oe_no_empty mt-1"/>
+            </div>
+            <t t-if="question.question_type == 'text_box'">
+                <t t-call="survey.question_text_box"/>
+            </t>
+            <t t-if="question.question_type == 'char_box'">
+                <t t-call="survey.question_char_box"/>
+            </t>
+            <t t-if="question.question_type == 'numerical_box'">
+                <t t-call="survey.question_numerical_box"/>
+            </t>
+            <t t-if="question.question_type == 'date'">
+                <t t-call="survey.question_date"/>
+            </t>
+            <t t-if="question.question_type == 'datetime'">
+                <t t-call="survey.question_datetime"/>
+            </t>
+            <t t-if="question.question_type == 'simple_choice'">
+                <t t-call="survey.question_simple_choice"/>
+            </t>
+            <t t-if="question.question_type == 'multiple_choice'">
+                <t t-call="survey.question_multiple_choice"/>
+            </t>
+            <t t-if="question.question_type == 'matrix'">
+                <t t-call="survey.question_matrix"/>
+            </t>
+            <t t-if="question.question_type == 'upload_file'">
+                <t t-call="quiz.upload_file"/>
+            </t>
+            <div class="o_survey_question_error overflow-hidden border-0 py-0 px-3 alert alert-danger"
+                 role="alert"></div>
+        </div>
+    </template>
+
+    <!-- ============================================================ -->
+    <!--                         survey page print                    -->
+    <!-- ============================================================ -->
+
+
+
+    <!-- ============================================================ -->
+    <!--                         survey page print                    -->
+    <!-- ============================================================ -->
+    <template id="survey.survey_page_print" name="Survey: print page">
+        <t t-call="survey.layout">
+            <t t-set="survey_form_readonly" t-value="true"/>
+            <t t-if="answer.test_entry" t-call="survey.survey_button_form_view"/>
+            <div class="wrap">
+                <div class="o_survey_print container">
+                    <div class='py-5 mt32'>
+                        <h1>
+                            <span t-field='survey.title'/>
+                        </h1>
+                        <t t-if="survey.description">
+                            <div t-field='survey.description' class="oe_no_empty"/>
+                        </t>
+                        <t t-if="review" t-call="survey.survey_button_retake"/>
+                    </div>
+                    <div role="form">
+                        <fieldset disabled="disabled">
+                            <t t-foreach='survey.question_and_page_ids' t-as='question'>
+                                <t t-if="question.is_page and
+                                            (any(q in questions_to_display for q in question.question_ids)
+                                            or not is_html_empty(question.description))">
+                                    <hr t-if="question != survey.page_ids[0]"/>
+                                    <div class="o_page_header">
+                                        <h1 t-field='question.title'/>
+                                        <div t-if="question.description" t-field='question.description'
+                                             class="oe_no_empty"/>
+                                    </div>
+                                </t>
+                                <t t-if="not question.is_page and not answer or (question in answer.predefined_question_ids &amp; questions_to_display)">
+                                    <t t-set="answer_lines"
+                                       t-value="answer.user_input_line_ids.filtered(lambda line: line.question_id == question)"/>
+                                    <div class="js_question-wrapper" t-att-id="question.id">
+                                        <h2>
+                                            <span t-field='question.title'/>
+                                            <span t-if="question.constr_mandatory" class="text-danger">*</span>
+                                            <span t-if="scoring_display_correction" class="badge badge-pill"
+                                                  t-att-data-score-question="question.id"></span>
+                                        </h2>
+                                        <t t-if="question.description">
+                                            <div class="text-muted oe_no_empty" t-field='question.description'/>
+                                        </t>
+                                        <t t-if="question.question_type == 'text_box'">
+                                            <t t-call="survey.question_text_box"/>
+                                        </t>
+                                        <t t-if="question.question_type == 'char_box'">
+                                            <t t-call="survey.question_char_box"/>
+                                        </t>
+                                        <t t-if="question.question_type == 'numerical_box'">
+                                            <t t-call="survey.question_numerical_box"/>
+                                        </t>
+                                        <t t-if="question.question_type == 'date'">
+                                            <t t-call="survey.question_date"/>
+                                        </t>
+                                        <t t-if="question.question_type == 'datetime'">
+                                            <t t-call="survey.question_datetime"/>
+                                        </t>
+                                        <t t-if="question.question_type == 'simple_choice'">
+                                            <t t-call="survey.question_simple_choice"/>
+                                        </t>
+                                        <t t-if="question.question_type == 'multiple_choice'">
+                                            <t t-call="survey.question_multiple_choice"/>
+                                        </t>
+                                        <t t-if="question.question_type == 'matrix'">
+                                            <t t-call="survey.question_matrix"/>
+                                        </t>
+                                        <t t-if="question.question_type == 'upload_file'">
+                                            <t t-call="quiz.upload_file"/>
+                                        </t>
+                                        <div
+                                            class="o_survey_question_error overflow-hidden border-0 py-0 px-3 alert alert-danger"
+                                            role="alert"></div>
+                                    </div>
+                                </t>
+                            </t>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="upload_file" name="Upload file">
+        <div class="input-file-container">
+            <t t-if="user_input_line_upload_file">
+                <t t-foreach="user_input_line_upload_file" t-as="upload_file"
+                   t-if="upload_file.question_id.id == question.id">
+                    <t t-if="upload_file.file_type == 'pdf'">
+                        <a width="100px" height="100px"
+                           t-att-href="'data:application/pdf;base64,%s' % to_text(upload_file.file)" target="_blank">
+                            Telecharger
+                        </a>
+                    </t>
+                    <t t-if="upload_file.file_type == 'image'">
+                        <img width="100px" style="height: 100px;" class="img-thumbnail"
+                             t-att-src="'data:image/*;base64,%s' % to_text(upload_file.file)"/>
+                    </t>
+                </t>
+            </t>
+            <t t-else="">
+                <div class="file-field">
+                    <input class="input-file" id="my-file" type="file" accept="image/*,application/pdf"
+                           t-att-name="prefix"/>
+                </div>
+                <br/>
+            </t>
+        </div>
+
+        <script>
+            $(document).ready(function(){
+            $(".img-thumbnail").click(function(){
+            if ( $(this).height() == 240) {
+            console.log('test small image');
+            $(this).animate({
+            opacity: '0.8',
+            height: '100px',
+            width: '100px',
+            }, "slow");
+            } else {
+            $(this).animate({
+            opacity: '0.8',
+            height: '250px',
+            width: '250px',
+            }, "slow");
+            }
+            });
+            });
+        </script>
+    </template>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="inherited_res_partner_view" model="ir.ui.view">
+            <field name="name">inherit.res.partner.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.res_partner_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='customer']" position="replace">
+                    <filter string="Customer" name="customer"
+                            domain="[('customer_rank','>', 0),('customer','=', True), ('company_id','in', allowed_company_ids)]"/>
+                </xpath>
+                <xpath expr="//filter[@name='supplier']" position="replace">
+                    <filter string="Vendor" name="supplier"
+                            domain="[('supplier_rank','>', 0),('supplier','=', True), ('company_id','in', allowed_company_ids)]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherited_res_partner_bispro_search" model="ir.ui.view">
+            <field name="name">res.partner.search.partner.inherited</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="bispro_partner_filter.res_partner_bispro_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='customer']" position="replace">
+
+                </xpath>
+                <xpath expr="//filter[@name='vendor']" position="replace">
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

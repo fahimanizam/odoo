@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_odoo_daily_sales_salesman,odoo.daily.sales,model_odoo_daily_sales,sales_team.group_sale_salesman,1,1,1,0
+access_odoo_daily_sales_manager,odoo.daily.sales,model_odoo_daily_sales,sales_team.group_sale_manager,1,1,1,1
+access_odoo_daily_sales_template_salesman,odoo.daily.sales.template,model_odoo_daily_sales_template,sales_team.group_sale_salesman,1,1,1,0
+access_odoo_daily_sales_template_manager,odoo.daily.sales.template,model_odoo_daily_sales_template,sales_team.group_sale_manager,1,1,1,1

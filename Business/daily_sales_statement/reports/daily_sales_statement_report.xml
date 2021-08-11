@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+            <report
+                id="action_daily_sales_statement_report"
+                string="Daily Sales Statement"
+                model="daily.sales.statement"
+                report_type="qweb-html"
+                file="daily_sales_statement.daily_sales_statement_template_id"
+                name="daily_sales_statement.daily_sales_statement_template_id"
+        />
+
+    </data>
+</odoo>

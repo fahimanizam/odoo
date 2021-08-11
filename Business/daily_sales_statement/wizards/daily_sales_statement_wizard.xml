@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="daily_sales_statement_report_wizard" model="ir.ui.view">
+        <field name="name">Daily Sales Statement</field>
+        <field name="model">daily.sales.statement</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Daily Sales Statement">
+                <group>
+                    <group>
+                        <field name="start_date"/>
+                    </group>
+                    <group>
+                        <field name="end_date"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="user_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button name="print_due_report_by_salesperson" string="Print" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_due_report_wizard" model="ir.actions.act_window">
+        <field name="name">Daily Sales Statement Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">daily.sales.statement</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="daily_sales_statement_report_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem action="action_due_report_wizard"
+              id="menu_due_report_wizard"
+              parent="account.menu_finance_reports"
+              groups="account.group_account_manager"/>
+</odoo>

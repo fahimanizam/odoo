@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherited Student transport form -->
+        <record id="inherited_view_student_transport_form" model="ir.ui.view">
+            <field name="name">inherited.student.transport.form</field>
+            <field name="model">student.transport</field>
+            <field name="inherit_id" ref="school_transport.view_student_transport_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='trans_participants_ids']" position="replace">
+                    <field name="trans_participants_ids" nolabel='1'>
+                        <tree editable="top" string="Participant Information">
+                            <field name="stu_pid_id"/>
+                            <field name="name"/>
+                            <field name="vehicle_id"/>
+                            <field name="months"/>
+                            <field name="tr_reg_date"/>
+                            <field name="tr_end_date"/>
+                            <field name="amount"/>
+                            <field name="state"/>
+                        </tree>
+                        <form string="Participant Information">
+                            <group col="6" colspan="4">
+                                <field name="stu_pid_id"/>
+                                <field name="name"/>
+                                <field name="transport_id"/>
+                                <field name="vehicle_id"/>
+                                <field name="months"/>
+                                <field name="tr_reg_date"/>
+                                <field name="tr_end_date"/>
+                                <field name="amount"/>
+                                <field name="state"/>
+                            </group>
+                        </form>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+        <!-- ========================================= -->
+
+        <!-- ============Transport Registration============ -->
+        <record id="inherited_transport_registration_form1" model="ir.ui.view">
+            <field name="name">inherited.transport.registration.form</field>
+            <field name="model">transport.registration</field>
+            <field name="inherit_id" ref="school_transport.transport_registration_form1"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='reg_end_date']" position="replace">
+                    <field name="reg_end_date" context="{'registration_month':registration_month,'reg_date':reg_date}"/>
+                </xpath>
+                <xpath expr="//field[@name='paid_amount']" position="replace">
+                    <field name="paid_amount"/>
+                </xpath>
+                <xpath expr="//field[@name='remain_amt']" position="replace">
+                    <field name="remain_amt" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- ========================================= -->
+
+
+    </data>
+</odoo>

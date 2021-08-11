@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+            <report
+                id="action_purchase_statement_report"
+                string="Daily Purchase Statement"
+                model="daily.purchase.statement"
+                report_type="qweb-html"
+                file="daily_purchase_statement.daily_purchase_statement_template_id"
+                name="daily_purchase_statement.daily_purchase_statement_template_id"
+        />
+
+    </data>
+</odoo>

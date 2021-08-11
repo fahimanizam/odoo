@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="item_receive_template_id">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <center>
+                            <b>
+                                <h3>Item Receive Register</h3>
+                            </b>
+                        </center>
+                        <center>
+                            <b>
+                                <span t-esc="date_form"/>
+                                To
+                                <span t-esc="date_to"/>
+                            </b>
+                        </center>
+                        <br/>
+                        <table class="table table-bordered" style="border: 1px solid #000;">
+                            <t t-set="total_qty" t-value="0"/>
+                            <t t-set="total_unit" t-value="0"/>
+                            <t t-set="total_price" t-value="0"/>
+                            <t t-set="counter" t-value="0"/>
+                            <tbody>
+                                <tr>
+                                    <th style="color: #000;text-color: #000;">Date</th>
+                                    <th style="color: #000;text-color: #000;">Vendor Reference</th>
+                                    <th style="color: #000;text-color: #000;">Reference</th>
+                                    <th style="color: #000;text-color: #000;">Item ReceiveId</th>
+                                    <th style="color: #000;text-color: #000;">Item Name</th>
+                                    <th style="color: #000;text-color: #000;">Supplier/Branch Name</th>
+                                    <th style="color: #000;text-color: #000;">Quantity</th>
+                                    <th style="color: #000;text-color: #000;">Unit Cost</th>
+                                    <th style="color: #000;text-color: #000;">Tax</th>
+                                    <th style="color: #000;text-color: #000;">Total</th>
+                                </tr>
+                                <tr t-foreach="itemreceivelines" t-as="value">
+                                    <td style="height:5x;text-align: center;color: #000;text-color: #000;">
+                                        <t t-esc="str((value['odate']))"/>
+                                    </td>
+
+                                    <td style="height:5px;color: #000;text-color: #000">
+                                        <t t-if="value['vendor_ref']">
+                                         <t t-esc="value['vendor_ref']"/>
+                                        </t>
+                                    </td>
+                                    <td style="height:5px;color: #000;text-color: #000">
+                                        <t t-esc="value['pro_ref']"/>
+                                    </td>
+                                    <td style="height:5px;color: #000;text-color: #000">
+                                        <t t-esc="request.env['res.users'].search([('id','=',value['purchase_person'])]).name"/>
+                                    </td>
+                                    <td style="height:5px;color: #000;text-color: #000">
+                                        <t t-esc="request.env['product.product'].search([('id','=',value['pro_name'])]).name"/>
+                                    </td>
+                                    <td style="height:5px;text-align: center;color: #000;text-color: #000">
+                                        <t t-esc="request.env['res.partner'].search([('id','=',value['customer_name'])]).name"/>
+                                    </td>
+
+                                    <td style="height:5x;color: #000;text-color: #000;">
+                                        <t t-esc="value['qty_invoiced']"/>
+                                        <t t-set="total_qty" t-value="total_qty + value['qty_invoiced']"/>
+                                    </td>
+                                    <td style="height:5x;color: #000;text-color: #000;">
+                                        <t t-esc="value['price_unit']"/>
+                                        <t t-set="total_unit" t-value="total_unit + value['price_unit']"/>
+                                    </td>
+
+                                    <td style="height:5px;color: #000;text-color: #000">
+                                         <t t-esc="value['tax']"/>
+                                    </td>
+                                    <td style="height:5px;color: #000;text-color: #000">
+                                        <t t-esc="value['price_unit']*value['product_qty']"/>
+                                        <t t-set="total_price" t-value="total_price + (value['price_unit']*value['qty_invoiced'])"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6"><b>Total</b></td>
+                                    <td><span t-esc="total_qty"/></td>
+                                    <td><span t-esc="total_unit"/></td>
+                                    <td colspan="2"><span t-esc="total_price"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account.res_partner_action_supplier" model="ir.actions.act_window">
+            <field name="name">Restaurant</field>
+        </record>
+
+<!--        <record model="ir.actions.act_window" id="action_user_event_view">-->
+<!--            <field name="name">Events</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="res_model">event.event</field>-->
+<!--            <field name="view_mode">kanban,tree</field>-->
+<!--            <field name="domain">[('user_id','=','active_id')]</field>-->
+<!--            <field name="context">{-->
+<!--                    'user_id': 'active_id',-->
+<!--                }-->
+<!--            </field>-->
+<!--            <field name="search_view_id" ref="event.view_event_search"/>-->
+<!--        </record>-->
+
+<!--        <record id="user_event_view_kanban" model="ir.actions.act_window.view">-->
+<!--            <field name="sequence" eval="0"/>-->
+<!--            <field name="view_mode">kanban</field>-->
+<!--            <field name="view_id" ref="event.view_event_kanban"/>-->
+<!--            <field name="act_window_id" ref="action_user_event_view"/>-->
+<!--        </record>-->
+
+<!--        <record id="user_event_view_tree" model="ir.actions.act_window.view">-->
+<!--            <field name="sequence" eval="1"/>-->
+<!--            <field name="view_mode">tree</field>-->
+<!--            <field name="view_id" ref="event.view_event_tree"/>-->
+<!--            <field name="act_window_id" ref="action_user_event_view"/>-->
+<!--        </record>-->
+
+<!--        <record id="event.menu_event_event" model="ir.ui.menu">-->
+<!--            <field name="action" ref="custom_res_partner.action_user_event_view"/>-->
+<!--        </record>-->
+
+        <!-- Changed roll_no field in student form -->
+        <record id="inherited_view_partner_form" model="ir.ui.view">
+            <field name="name">inherited.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+<!--                <div name="button_box" position="inside">-->
+<!--                        <button class="oe_stat_button"-->
+<!--                                type="object"-->
+<!--                                name="action_user_event_view"-->
+<!--                                icon="fa-bullhorn"-->
+<!--                                groups="event.group_event_user">-->
+<!--                                <field string="Events" name="user_event_count" widget="statinfo"/>-->
+<!--                        </button>-->
+<!--                </div>-->
+
+                <xpath expr="//field[@name='company_type']" position="after">
+                    <h3>
+                        <field name="usertype" placeholder="Choose user Type"/>
+                    </h3>
+
+                </xpath>
+                <xpath expr="//button[@name='action_event_view']" position="replace">
+                    <button class="oe_stat_button"
+                        groups="event.group_event_user"
+                        type="object"
+                        icon="fa-bullhorn"
+                        name="action_event_view">
+                        <field string="Events" name="event_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <!--                    <h3 attrs="{'required':[('usertype','=','restaurant')],'invisible':[('usertype','!=','restaurant')]}">-->
+                    <field name="time" string="Opening Time" widget="timepicker"
+                           attrs="{'required':[('usertype','=','restaurant')],'invisible':[('usertype','!=','restaurant')]}"/>
+                    <!--                    </h3>-->
+                    <field name="interest_id"
+                           attrs="{'required':[('usertype','=','customer')],'invisible':[('usertype','!=','customer')]}"
+                           widget="many2many_tags"
+                           options="{'color_field': 'color', 'no_create_edit': True}"
+                           placeholder="Interests..."/>
+
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="available_food"
+                           string="Available Food"
+                           attrs="{'required':[('usertype','=','restaurant')],'invisible':[('usertype','!=','restaurant')]}"
+                           widget="many2many_tags"
+                           options="{'color_field': 'color', 'no_create_edit': True}"
+                           placeholder="Available Food"/>
+                    <br/>
+
+                    <field name="gender"
+                           attrs="{'required':[('usertype','=','customer')],'invisible':[('usertype','!=','customer')]}"/>
+                    <field name="birthday"
+                           attrs="{'required':[('usertype','=','customer')],'invisible':[('usertype','!=','customer')]}"/>
+                    <field name="relationship"
+                           attrs="{'required':[('usertype','=','customer')],'invisible':[('usertype','!=','customer')]}"/>
+                    <field name="fav_food"
+                           attrs="{'required':[('usertype','=','customer')],'invisible':[('usertype','!=','customer')]}"
+                           string="Favorite Food"
+                           widget="many2many_tags"
+                           options="{'color_field': 'color', 'no_create_edit': True}"
+                           placeholder="Favorite Food..."/>
+                </xpath>
+                <!--                <xpath expr="//field[@name='name']" position="after">-->
+                <xpath expr="//h1" position="inside">
+                    <span attrs="{'required':[('usertype','=','customer')],'invisible':[('usertype','!=','customer')]}">
+                        ,
+                        <field name="age"
+                               attrs="{'required':[('usertype','=','customer')],'invisible':[('usertype','!=','customer')]}"/>
+                        year
+                    </span>
+                </xpath>
+            </field>
+        </record>
+        <!-- // -->
+
+
+    </data>
+</odoo>

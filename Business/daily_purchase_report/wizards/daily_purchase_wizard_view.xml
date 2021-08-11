@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="daily_purchase_form" model="ir.ui.view">
+            <field name="name">Daily Purchase Report</field>
+            <field name="model">daily.purchase</field>
+            <field name="arch" type="xml">
+                <form string="Daily Purchase Report">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date_today"/>
+                                <field name="categ_id" widget="many2many"
+                                       options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Data">
+                                <field name="purchaselines">
+                                    <tree>
+                                        <field name="categ"/>
+                                        <field name="product_name"/>
+                                        <field name="qty"/>
+                                        <field name="odate"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button name="daily_purchase_print_pdf"
+                                type="object"
+                                string="Print Pdf"
+                                class="oe_highlight"/>
+                        <button name="daily_purchase_preview"
+                                type="object"
+                                string="Preview"
+                                class="oe_highlight"/>
+                        <button special="cancel"
+                                string="Cancel"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+<!--        <record id="action_view_wizard" model="ir.actions.act_window">-->
+<!--            <field name="name">Hi i am a wizard</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="res_model">dedy.yuristiawan.wizard</field>-->
+<!--            <field name="view_type">form</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="view_id" ref="dedy_yuristiawan_wiz"/>-->
+<!--            <field name="target">new</field>-->
+<!--        </record>-->
+
+        <record model="ir.actions.act_window" id="daily_purchase_pdf_action">
+            <field name="name">Daily Purchase Report</field>
+            <field name="res_model">daily.purchase</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="daily_purchase_form"/>
+        </record>
+
+        <menuitem id="purchase.purchase_report" name="Reporting" parent="purchase.menu_purchase_root" sequence="99"
+                  groups="purchase.group_purchase_manager"/>
+        <menuitem id="purchase_action_report" name="Reporting" parent="purchase.purchase_report"
+                  groups="purchase.group_purchase_manager" action="purchase.action_purchase_order_report_all"/>
+
+        <menuitem id="daily_purchase_report"
+                  name="Daily Purchase Report"
+                  parent="purchase.purchase_report"
+                  groups="purchase.group_purchase_manager"
+                  action="daily_purchase_pdf_action"/>
+
+    </data>
+</odoo>

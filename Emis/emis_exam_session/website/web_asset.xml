@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="assets_frontend" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/emis_exam_session/static/src/css/fontawesome.min.css"/>
+            <link rel="stylesheet" href="/emis_exam_session/static/src/css/dropify.css"/>
+            <link rel="stylesheet" href="/emis_exam_session/static/src/css/toastr.css"/>
+            <script type="text/javascript" src="/emis_exam_session/static/src/js/fontawesome.min.js"/>
+            <script type="text/javascript" src="/emis_exam_session/static/src/js/dropify.js"/>
+            <script type="text/javascript" src="/emis_exam_session/static/src/js/toastr.min.js"/>
+            <script>
+                $('#admit_card').dropify({
+                messages: {
+                'default': 'Admit Card',
+                'replace': 'Replace Admit Card',
+                'remove': 'Remove',
+                'error': 'Ooops, something wrong happened.'
+                }
+                });
+                $('#student_image').dropify({
+                messages: {
+                'default': 'Student Image',
+                'replace': 'Replace Student Image',
+                'remove': 'Remove',
+                'error': 'Ooops, something wrong happened.'
+                }
+                });
+                $('#attachment_id').dropify({
+                messages: {
+                'default': 'Attach Your Answer',
+                'replace': 'Replace Attachment',
+                'remove': 'Remove',
+                'error': 'Ooops, something wrong happened.'
+                }
+                });
+            </script>
+            <script>
+                $('#submission_form').submit(function(e){
+                    e.preventDefault();
+                    let fd = new FormData(this);
+                    $.ajax({
+                        url: '/create/submission',
+                        dataType: "JSON",
+                        data: fd,
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        success: function(data) {
+                            if(data.status){
+                                toastr.success(data.message);
+                            }else{
+                                toastr.error(data.message);
+                            }
+                            console.log(data);
+                        }
+                    });
+                });
+            </script>
+        </xpath>
+    </template>
+
+</odoo>

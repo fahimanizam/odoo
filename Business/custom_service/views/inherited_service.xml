@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- report -->
+        <record id="inherited_mobile_service_request_form_view" model="ir.ui.view">
+            <field name="name">inherited.mobile.service.form</field>
+            <field name="model">mobile.service</field>
+            <field name="inherit_id" ref="mobile_service_shop.mobile_service_request_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='technician_name']" position="after">
+                    <field name="picking_transfer_id"/>
+                </xpath>
+                <xpath expr="//field[@name='model_name']" position="replace">
+                    <field name="model_name" placeholder="Model name"
+                           attrs="{'readonly': [('service_state','not in',('draft'))]}"/>
+                </xpath>
+                <xpath expr="//field[@name='person_name']" position="before">
+                    <field name="request_id" context="{'default_request_id' : 'active_id'}"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- // -->
+
+        <!-- // -->
+        <menuitem name="Service"
+                  id="menu_repair_order"
+                  parent="generic_request.menu_configuration"
+                  groups="generic_request.group_request_manager,stock.group_stock_user,mobile_service_shop.mobile_service_group_executer,mobile_service_shop.mobile_service_group_executer"
+                  action="mobile_service_shop.action_mobile_service_request"/>
+
+        <record model='ir.ui.menu' id='mobile_service_shop.mobile_service_main_menu'>
+            <field name="name">Service</field>
+        </record>
+
+        <record model="account.journal" id="mobile_service_shop.mobile_service_journal">
+            <field name="name">Service</field>
+        </record>
+        <record model="product.template" id="mobile_service_shop.mobile_service_product">
+            <field name="name">Service Charge</field>
+        </record>
+        <record model="product.template" id="mobile_service_shop.mobile_service_advance_product">
+            <field name="name">Service Advance</field>
+        </record>
+
+
+        <!--        <record model="ir.actions.act_window" id="mobile_service_request_form_view_action">-->
+        <!--            <field name="name">Service</field>-->
+        <!--            <field name="res_model">mobile.service</field>-->
+        <!--            <field name="view_mode">form</field>-->
+        <!--            <field name="target">new</field>-->
+        <!--            <field name="view_id" ref="mobile_service_shop.mobile_service_request_form_view"/>-->
+        <!--        </record>-->
+
+        <record id="mobile_service_request_form_view_action" model="ir.actions.act_window">
+            <field name="res_model">mobile.service</field>
+            <field name="name">Service</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('request_id', '=', active_id)]</field>
+            <field name="context">{'default_request_id': active_id}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a service
+                </p>
+            </field>
+        </record>
+
+        <!-- // -->
+
+
+        <!-- // -->
+        <record id="inherited_view_request_request_form_1" model="ir.ui.view">
+            <field name="name">inherited.request.request</field>
+            <field name="model">request.request</field>
+            <field name="inherit_id" ref="generic_request.view_request_request_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="%(custom_service.mobile_service_request_form_view_action)d"
+                            type="action"
+                            context="{'search_default_expected': True}"
+                            class="oe_stat_button"
+                            icon="fa-cog"
+                            help="Total service">
+                        <field name="service_count" widget="statinfo" string="Service"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!--         <record model="ir.ui.view" id="inherited_view_request_request_form_1">-->
+        <!--        <field name="model">request.request</field>-->
+        <!--        <field name="inherit_id" ref="generic_request.view_request_request_form"/>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <div name="button_box" position="inside">-->
+        <!--                <button class="oe_stat_button"-->
+        <!--                        name="mobile_service_request_form_view_action"-->
+        <!--                        type="object"-->
+        <!--                        string="Add Service"-->
+        <!--                        icon="fa-cog">-->
+        <!--                </button>-->
+        <!--            </div>-->
+        <!--        </field>-->
+        <!--    </record>-->
+        <!-- // -->
+
+
+    </data>
+</odoo>

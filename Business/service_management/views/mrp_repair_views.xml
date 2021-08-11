@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inherited_view_repair_order_form" model="ir.ui.view">
+            <field name="name">inherited.view.repair.order.form</field>
+            <field name="model">repair.order</field>
+            <field name="inherit_id" ref="repair.view_repair_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='guarantee_limit']" position="after">
+                    <field name="warranty_status"/>
+                </xpath>
+                <xpath expr="//field[@name='product_uom']" position="after">
+                    <field name="product_uom" string="Unit of Measure"/>
+                </xpath>
+                <xpath expr="//field[@name='address_id']" position="after">
+                    <field name="need_part" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                </xpath>
+                  <xpath expr="//field[@name='state']" position="replace">
+                       <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,under_repair,waitingforpart,done"/>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem name="Service"
+              id="menu_repair_order"
+              parent="generic_request.menu_configuration"
+              groups="generic_request.group_request_manager,stock.group_stock_user"
+              action="repair.action_repair_order_tree"/>
+
+        <record model='ir.ui.menu' id='repair.menu_repair_order'>
+            <field name="name">Service</field>
+        </record>
+        <record model='ir.ui.menu' id='repair.repair_menu'>
+            <field name="name">Service</field>
+        </record>
+        <record model="ir.actions.act_window" id='repair.action_repair_order_tree'>
+            <field name="name">Service Orders</field>
+        </record>
+<!--        <record model="ir.ui.view" id='repair.view_repair_graph'>-->
+<!--            <graph name="string">Service Orders</graph>-->
+<!--        </record>-->
+<!--        <record model="ir.ui.view" id='repair.view_repair_pivot'>-->
+<!--            <graph name="string">Service Orders</graph>-->
+<!--        </record>-->
+
+<!--        <menuitem action="action_repair_order_tree" id="repair.menu_repair_order" groups="stock.group_stock_user"-->
+<!--                  name="Repairs" sequence="36"-->
+<!--                  web_icon="repair,static/description/icon.png"/>-->
+
+<!--        <menuitem id="repair_menu_reporting" name="Reporting" parent="menu_repair_order"-->
+<!--                  groups="stock.group_stock_manager"/>-->
+
+<!--        <menuitem id="repair_menu" name="Repairs" parent="repair_menu_reporting" action="action_repair_order_graph"/>-->
+
+<!--        <menuitem id="repair_menu_config" name="Configuration" parent="menu_repair_order"-->
+<!--                  groups="stock.group_stock_manager"/>-->
+
+<!--        <menuitem id="repair_menu_tag" name="Repair Orders Tags" parent="repair_menu_config"-->
+<!--                  action="action_repair_order_tag"/>-->
+
+    </data>
+</odoo>

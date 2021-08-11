@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="template_exam_result_card_board_standard">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center">
+                                <div class="bg-white p-4">
+                                    <div class="row mb-2">
+                                        <div class="col-2">
+                                            <img t-if="o.student_id.school_id.company_id.logo"
+                                                 t-att-src="'data:image/png;base64,%s' % to_text(o.student_id.school_id.company_id.logo)"
+                                                 style="max-height: 50px;"/>
+                                        </div>
+                                        <div class="col-8 text-center">
+                                            <h3>
+                                                <span t-field="o.student_id.school_id.com_name"/>
+                                            </h3>
+                                            <h6>
+                                                <span t-field="o.student_id.school_id.company_id.street"/>
+                                            </h6>
+                                            <h6>
+                                                <span t-if="o.student_id.school_id.company_id.email"
+                                                      t-esc="'Email: %s' %(o.student_id.school_id.company_id.email)"/>
+                                                <span t-if="o.student_id.school_id.company_id.website"
+                                                      t-esc="' Web: %s' %(o.student_id.school_id.company_id.website)"/>
+                                            </h6>
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-12 text-center">
+                                            <h4>Report Card</h4>
+                                            <h4 t-field="o.s_exam_ids.name"/>
+                                        </div>
+                                    </div>
+                                    <div class="row d-flex mb-2">
+                                        <div class="col-7 justify-content-center align-self-center">
+                                            <table class="table table-sm table-bordered student-info-table"
+                                                   style="border:1px solid black; font-size:small;">
+                                                <tbody>
+                                                    <tr style="border:1px solid black;">
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <strong>Student ID</strong>
+                                                        </td>
+                                                        <td style="border:1px solid black; border-right: none;"
+                                                            class="py-0">
+                                                            <span t-field="o.student_id.student_code"/>
+                                                        </td>
+                                                        <td style="border:1px solid black; border-left: none;"
+                                                            class="py-0">
+                                                            <strong>Class Roll</strong>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <span t-field="o.student_id.roll_no"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:1px solid black;">
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <strong>Student Name</strong>
+                                                        </td>
+                                                        <td colspan="3" style="border:1px solid black;" class="py-0">
+                                                            <span
+                                                                    t-esc="o.student_id.full_name"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:1px solid black;">
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <strong>Branch</strong>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <span t-field="o.student_id.school_id"/>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <strong>Class</strong>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <span t-field="o.standard_id"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:1px solid black;">
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <strong>Section</strong>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <span t-field="o.standard_id.division_id"/>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <strong>Version</strong>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <span t-field="o.student_id.medium_id"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:1px solid black;">
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <strong>Session</strong>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <span t-field="o.student_id.year.name"/>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="py-0">
+                                                            <strong>Group</strong>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="py-0"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-5">
+                                            <table class="table table-sm table-bordered text-center"
+                                                   style="border:1px solid black; font-size:small;">
+                                                <thead class="bg-primary" style="border:1px solid black;">
+                                                    <tr style="border:1px solid black;">
+                                                        <th style="border:1px solid black;" class="py-0">Letter Grade
+                                                        </th>
+                                                        <th style="border:1px solid black;" class="py-0">Marks
+                                                            Interval(%)
+                                                        </th>
+                                                        <th style="border:1px solid black;" class="py-0">Grade Point
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="border:1px solid black;">
+                                                    <t t-foreach="o.grade_system.grade_ids" t-as="g">
+                                                        <tr style="border:1px solid black;">
+                                                            <td style="border:1px solid black;" class="py-0">
+                                                                <span t-field="g.grade"/>
+                                                            </td>
+                                                            <td style="border:1px solid black;" class="py-0">
+                                                                <span t-esc="'%d-%d'%(g.from_mark, g.to_mark)"/>
+                                                            </td>
+                                                            <td style="border:1px solid black;" class="py-0">
+                                                                <span t-field="g.grade_point"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--                                    <div class="row">-->
+                                    <!--                                        <div class="col-12 text-center">-->
+                                    <!--                                            <h4 class="bg-primary px-5">A: Scholastics</h4>-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table
+                                                    class="table table-sm table-bordered mb-1 border-left-0 border-right-0"
+                                                    style="border:1px solid black; font-size:small;">
+                                                <thead style="border:1px solid black;">
+                                                    <tr style="border:1px solid black;">
+                                                        <th class="align-middle" style="border:1px solid black;">
+                                                            Srl. No
+                                                        </th>
+                                                        <th class="align-middle" style="border:1px solid black;">
+                                                            Name of Subject
+                                                        </th>
+                                                        <th class="align-middle" style="border:1px solid black;">
+                                                            Letter Grade
+                                                        </th>
+                                                        <th class="align-middle" style="border:1px solid black;">
+                                                            Grade Point
+                                                        </th>
+                                                        <th class="align-middle" style="border:1px solid black;">
+                                                            GPA
+                                                            <!-- <br/>-->
+                                                            <!-- <sub>(Without Additional Subject)</sub>-->
+                                                        </th>
+                                                        <th class="align-middle" style="border:1px solid black;">
+                                                            Letter Grade
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="border-left-0 border-right-0"
+                                                       style="border:1px solid black;">
+                                                    <t t-set="sl_no" t-value="0"/>
+                                                    <tr style="border:1px solid black;" t-foreach="o.result_ids"
+                                                        t-as="s">
+                                                        <t t-if="not s.subject_id.is_grouped">
+                                                            <t t-if="not s.subject_id.elective_id">
+                                                                <t t-set="sl_no" t-value="sl_no+1"/>
+                                                                <td style="border:1px solid black;">
+                                                                    <span t-esc="sl_no"/>
+                                                                </td>
+                                                                <td style="border:1px solid black;">
+                                                                    <span t-field="s.subject_id"/>
+                                                                </td>
+                                                                <td style="border:1px solid black;">
+                                                                    <span t-field="s.grade_line_id"/>
+                                                                </td>
+                                                                <td style="border:1px solid black;">
+                                                                    <span t-field="s.gpa"/>
+                                                                </td>
+                                                                <t t-if="sl_no == 1">
+                                                                    <td t-att-rowspan="len(o.result_ids)"
+                                                                        style="border:1px solid black;vertical-align : middle;text-align:center;">
+                                                                        <span t-field="o.gpa"/>
+                                                                    </td>
+                                                                    <td t-att-rowspan="len(o.result_ids)"
+                                                                        style="border:1px solid black;vertical-align : middle;text-align:center;">
+                                                                        <span t-field="o.grade"/>
+                                                                    </td>
+                                                                </t>
+                                                            </t>
+                                                        </t>
+                                                    </tr>
+
+                                                    <t t-set="group_subject" t-value=""/>
+                                                    <tr style="border:1px solid black;text-transform:capitalize;"
+                                                        t-foreach="o.result_ids"
+                                                        t-as="gs">
+                                                        <t t-if="gs.subject_id.is_grouped">
+                                                            <t t-if="group_subject == gs.subject_id">
+
+                                                            </t>
+                                                            <t t-else="">
+                                                                <t t-set="sl_no" t-value="sl_no+1"/>
+                                                                <t t-if="gs.subject_id.group_code == gs.subject_id.group_subject.group_code">
+                                                                    <t t-set="group_subject"
+                                                                       t-value="gs.subject_id.group_subject"/>
+                                                                    <td style="border:1px solid black;">
+                                                                        <span t-esc="sl_no"/>
+                                                                    </td>
+                                                                    <td style="border:1px solid black;">
+                                                                        <span t-esc="gs.subject_id.group_code"/>
+                                                                    </td>
+                                                                    <td style="border:1px solid black;">
+                                                                        <span t-esc="gs.group_subject_grade_line_id.grade"/>
+                                                                    </td>
+                                                                    <td style="border:1px solid black;">
+                                                                        <span t-esc="gs.group_subject_gpa"/>
+                                                                    </td>
+                                                                    <t t-if="sl_no == 1">
+                                                                        <td t-att-rowspan="len(o.result_ids)"
+                                                                            style="border:1px solid black;vertical-align : middle;text-align:center;">
+                                                                            <span t-field="o.gpa"/>
+                                                                        </td>
+                                                                        <td t-att-rowspan="len(o.result_ids)"
+                                                                            style="border:1px solid black;vertical-align : middle;text-align:center;">
+                                                                            <span t-field="o.grade"/>
+                                                                        </td>
+                                                                    </t>
+                                                                </t>
+                                                            </t>
+                                                        </t>
+                                                    </tr>
+                                                    <t t-foreach="o.result_ids" t-as="es">
+                                                        <t t-if="es.subject_id.elective_id">
+                                                            <tr class="border-left-0 border-right-0"
+                                                                style="border:1px solid black;">
+                                                                <td class="border-left-0 border-right-0 py-2"
+                                                                    colspan="13">Additional Subjects
+                                                                </td>
+                                                            </tr>
+                                                            <t t-set="sl_no" t-value="sl_no+1"/>
+                                                            <tr style="border:1px solid black;">
+                                                                <td style="border:1px solid black;">
+                                                                    <span t-esc="sl_no"/>
+                                                                </td>
+                                                                <td style="border:1px solid black;">
+                                                                    <span t-field="es.subject_id"/>
+                                                                </td>
+                                                                <td style="border:1px solid black;">
+                                                                    <span t-field="es.gpa"/>
+                                                                </td>
+                                                                <td style="border:1px solid black;">
+                                                                    <span t-field="es.grade_line_id"/>
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <t t-if="o.student_id.medium_id.name!='English Medium'">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <table class="table table-sm table-bordered mb-1"
+                                                       style="border:1px solid black; font-size:small;">
+                                                    <thead style="border:1px solid black;">
+                                                        <tr style="border:1px solid black;">
+                                                            <th style="border:1px solid black;">Grade Point Average</th>
+                                                            <th style="border:1px solid black;">
+                                                                <span t-field="o.gpa"/>
+                                                            </th>
+                                                            <th style="border:1px solid black;" colspan="2"
+                                                                class="text-center">Attendance
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody style="border:1px solid black;">
+                                                        <tr style="border:1px solid black;">
+                                                            <!--Letter Grade-->
+                                                            <td style="border:1px solid black;">Letter Grade</td>
+                                                            <td style="border:1px solid black;">
+                                                                <span t-field="o.grade"/>
+                                                            </td>
+                                                            <td style="border:1px solid black;">Total Attendance</td>
+                                                            <td style="border:1px solid black;">
+                                                                <span t-if="o.total_attendance"
+                                                                      t-field="o.total_attendance"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="border:1px solid black;">
+                                                            <td style="border:1px solid black;">Total Marks with
+                                                                Fraction
+                                                            </td>
+                                                            <td style="border:1px solid black;">
+                                                                <span t-field="o.total"/>
+                                                            </td>
+                                                            <td style="border:1px solid black;">Present</td>
+                                                            <td style="border:1px solid black;">
+                                                                <span t-if="o.present" t-field="o.present"></span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <t t-if="o.get_evaluation(o.student_id.id)">
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <h4 class="bg-primary px-5">B: Co-Scholastics Head</h4>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <div class="row">
+                                        <t t-foreach="o.get_evaluation(o.student_id.id)" t-as="e">
+                                            <div class="col-12 text-center">
+                                                <t t-set="total_eval" t-value="len(e.eval_line_ids)"/>
+                                                <t t-set="half_of_total_eval" t-value="int(len(e.eval_line_ids)/2)"/>
+                                                <t t-if="total_eval > 1">
+                                                    <div class="col-6">
+                                                        <table class="table table-sm table-bordered"
+                                                               style="border:1px solid black; font-size:small;">
+                                                            <thead style="border:1px solid black;">
+                                                                <tr style="border:1px solid black;">
+                                                                    <th style="border:1px solid black;">Co-Scholastics
+                                                                        Head
+                                                                    </th>
+                                                                    <th style="border:1px solid black;">Grade</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody style="border:1px solid black;">
+                                                                <t t-foreach="e.eval_line_ids[:half_of_total_eval]"
+                                                                   t-as="el">
+                                                                    <tr style="border:1px solid black;">
+                                                                        <td style="border:1px solid black;">
+                                                                            <span t-esc="el.stu_eval_id.desc"/>
+                                                                        </td>
+                                                                        <td style="border:1px solid black;">
+                                                                            <span t-esc="el.rating"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </t>
+                                                                <t t-if="(total_eval % 2)!=0">
+                                                                    <tr style="border:1px solid black;">
+                                                                        <td style="border:1px solid black;">
+                                                                            <span style="color:#FFF">Blank</span>
+                                                                        </td>
+                                                                        <td style="border:1px solid black;"></td>
+                                                                    </tr>
+                                                                </t>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="col-6">
+                                                        <table class="table table-sm table-bordered"
+                                                               style="border:1px solid black; font-size:small;">
+                                                            <thead>
+                                                                <tr style="border:1px solid black;">
+                                                                    <th style="border:1px solid black;">Co-Scholastics
+                                                                        Head
+                                                                    </th>
+                                                                    <th style="border:1px solid black;">Grade</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody style="border:1px solid black;">
+                                                                <t t-foreach="e.eval_line_ids[half_of_total_eval:]"
+                                                                   t-as="el">
+                                                                    <tr style="border:1px solid black;">
+                                                                        <td style="border:1px solid black;">
+                                                                            <span t-esc="el.stu_eval_id.desc"/>
+                                                                        </td>
+                                                                        <td style="border:1px solid black;">
+                                                                            <span t-esc="el.rating"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </t>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </t>
+                                                <t t-else="">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <table class="table table-sm table-bordered"
+                                                                   style="border:1px solid black; font-size:small;">
+                                                                <thead style="border:1px solid black;">
+                                                                    <tr style="border:1px solid black;">
+                                                                        <th style="border:1px solid black;">
+                                                                            Co-Scholastics
+                                                                            Head
+                                                                        </th>
+                                                                        <th style="border:1px solid black;">Grade</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody style="border:1px solid black;">
+                                                                    <t t-foreach="e.eval_line_ids" t-as="el">
+                                                                        <tr style="border:1px solid black;">
+                                                                            <td style="border:1px solid black;">
+                                                                                <span t-esc="el.stu_eval_id.desc"/>
+                                                                            </td>
+                                                                            <td style="border:1px solid black;">
+                                                                                <span t-esc="el.rating"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </t>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </t>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="border border-dark rounded mb-1">
+                                                <table class="table borderless mb-1" style="font-size:small;">
+                                                    <tr>
+                                                        <td style="border-right: none;">
+                                                            <strong>Remarks:</strong>
+                                                        </td>
+                                                        <td style="border-left: none;">
+                                                            <span t-field="o.remarks"/>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-sm table-bordered mb-1"
+                                                   style="border:1px solid black; font-size:small;">
+                                                <thead style="border:1px solid black;">
+                                                    <tr style="border:1px solid black;">
+                                                        <th style="border:1px solid black;" colspan="2">Class Teachers
+                                                            Name:
+                                                            <span t-field="o.standard_id.user_id"/>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="border:1px solid black;">
+                                                    <tr style="border:1px solid black;">
+                                                        <td style="border:1px solid black;">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input"/>
+                                                                <span>Promoted to Grade</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border:1px solid black;">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input"/>
+                                                                <span>To Repeat</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <t t-set="vice_principal_signature" t-value=""/>
+                                                    <t t-set="founder_principal_signature" t-value=""/>
+                                                    <t t-set="principal_signature" t-value=""/>
+                                                    <t t-if="o.get_signature_data()">
+                                                        <t t-foreach="o.get_signature_data()" t-as="sd">
+                                                            <t t-if="sd.signature_holder=='vice_principal'">
+                                                                <t t-set="vice_principal_signature"
+                                                                   t-value="sd.signature"/>
+                                                            </t>
+                                                            <t t-if="sd.signature_holder=='founder_principal'">
+                                                                <t t-set="founder_principal_signature"
+                                                                   t-value="sd.signature"/>
+                                                            </t>
+                                                            <t t-if="sd.signature_holder=='principal'">
+                                                                <t t-set="principal_signature" t-value="sd.signature"/>
+                                                            </t>
+                                                        </t>
+
+                                                    </t>
+                                                    <tr style="border:1px solid black;">
+                                                        <td style="border:1px solid black;" rowspan="2"
+                                                            class="align-middle">
+                                                            <span>Vice Principal's Signature:</span>
+                                                            <img t-if="vice_principal_signature"
+                                                                 t-att-src="'data:image/png;base64,%s' % to_text(vice_principal_signature)"
+                                                                 style="max-height: 50px;" class="float-right"/>
+                                                        </td>
+                                                        <td style="border:1px solid black;" class="align-middle">
+                                                            <span>Founder Principal's Signature:</span>
+                                                            <img t-if="founder_principal_signature"
+                                                                 t-att-src="'data:image/png;base64,%s' % to_text(founder_principal_signature)"
+                                                                 style="max-height: 25px;" class="float-right"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:1px solid black;" class="align-middle">
+                                                            <span>Principal's Signature:</span>
+                                                            <img t-if="principal_signature"
+                                                                 t-att-src="'data:image/png;base64,%s' % to_text(principal_signature)"
+                                                                 style="max-height: 25px;" class="float-right"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border:1px solid black;" class="align-middle">
+                                                            <strong>Parent's Signature:</strong>
+                                                        </td>
+                                                        <td style="border:1px solid black;">
+                                                            <strong>Next Term Begins on:</strong>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <record id="group_op_student" model="res.groups">
+            <field name="name">Student</field>
+            <field name="category_id" ref="openeducat_core.module_category_openeducat"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!--        <record model="ir.rule" id="openeducat_core.view_students_rule">-->
+        <!--            <field name="name">View Students</field>-->
+        <!--            <field name="model_id" ref="model_op_student"/>-->
+        <!--            <field name="groups"-->
+        <!--                   eval="[(4, ref('base.group_partner_manager'))]"/>-->
+        <!--            <field name="domain_force">[(1,'=',1)]</field>-->
+        <!--        </record>-->
+
+        <record model="ir.rule" id="openeducat_core.student_login_rule">
+            <field name="name">Student Login rule</field>
+            <field name="model_id" ref="openeducat_core.model_op_student" />
+            <field name="groups"
+                eval="[(4, ref('evaluation_emis.group_op_student'))]" />
+            <field name="domain_force"> ['|',('user_id','=',user.id),('student_id.user_id','=',user.id)]</field>
+        </record>
+
+    </data>
+</odoo>

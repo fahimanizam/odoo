@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- change standard ids field in subject form for getting subjects in school standard -->
+        <record id="inherited_view_subject_subject_form" model="ir.ui.view">
+            <field name="name">inherited.subject.subject.form</field>
+            <field name="model">subject.subject</field>
+            <field name="inherit_id" ref="school.view_subject_subject_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='standard_ids']" position="replace">
+                    <field name="standard_ids" nolabel="1" colspan="4"
+                           options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                </xpath>
+                <xpath expr="//field[@name='terms_minimum_marks']" position="after">
+                    <field name="is_grouped"/>
+                    <field name="group_subject" placeholder="Group Subject..."
+                           attrs="{'invisible': [('is_grouped','=', False)]}"/>
+                    <field name="group_code" placeholder="For Example: English"
+                           attrs="{'invisible': [('is_grouped','=', False)]}"/>
+                </xpath>
+                <xpath expr="//form/sheet/group[1]" position="after">
+                    <group>
+                        <group>
+                            <field name="is_ct"/>
+                        </group>
+                        <group>
+                            <field name="ct_maximum_marks" placeholder="CT Maximum Marks"
+                                   attrs="{'invisible':[('is_ct','!=',True)]}"/>
+                            <field name="ct_minimum_marks" placeholder="CT Minimum Marks"
+                                   attrs="{'invisible':[('is_ct','!=',True)]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="is_mcq"/>
+                        </group>
+                        <group>
+                            <field name="mcq_maximum_marks" placeholder="MCQ Maximum Marks"
+                                   attrs="{'invisible':[('is_mcq','!=',True)]}"/>
+                            <field name="mcq_minimum_marks" placeholder="MCQ Minimum Marks"
+                                   attrs="{'invisible':[('is_mcq','!=',True)]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="is_cq"/>
+                        </group>
+                        <group>
+                            <field name="cq_maximum_marks" placeholder="CQ Maximum Marks"
+                                   attrs="{'invisible':[('is_cq','!=',True)]}"/>
+                            <field name="cq_minimum_marks" placeholder="CQ Minimum Marks"
+                                   attrs="{'invisible':[('is_cq','!=',True)]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="is_practical"/>
+                        </group>
+                        <group>
+                            <field name="practical_maximum_marks" placeholder="Practical Maximum Marks"
+                                   attrs="{'invisible':[('is_practical','!=',True)]}"/>
+                            <field name="practical_minimum_marks" placeholder="Practical Minimum Marks"
+                                   attrs="{'invisible':[('is_practical','!=',True)]}"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        <!-- ========================================= -->
+
+        <!-- ================Form View Of Elective Subject Group================ -->
+        <record id="inherit_view_elective_group_form" model="ir.ui.view">
+            <field name="name">elective.subject.inherit</field>
+            <field name="model">subject.elective</field>
+            <field name="inherit_id" ref="school.view_elective_group_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='standard_ids']" position="replace">
+                    <field name="standard_ids" nolabel="1" colspan="4"
+                           options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}">
+                    </field>
+                </xpath>
+
+            </field>
+        </record>
+        <!-- ========================================= -->
+
+        <!-- Changed School Standard Form for solving subject Problem -->
+        <record id="inherited_view_school_standard_form" model="ir.ui.view">
+            <field name="name">inherited.school.standard.form</field>
+            <field name="model">school.standard</field>
+            <field name="inherit_id" ref="school.view_school_standard_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='syllabus_ids']" position="replace">
+                    <field name="syllabus_ids" nolabel="1" colspan="4"
+                           context="{'default_standard_id':standard_id}">
+                        <tree editable="top" string="Syllabs">
+                            <field name="standard_id" invisible="1"/>
+                            <field name="subject_id" required="1"
+                                   domain="[('standard_id','=',standard_id)]"
+                                   widget="selection"/>
+                            <field name="syllabus_doc" required="1"/>
+                        </tree>
+                        <form string="Syllabus">
+                            <group>
+                                <field name="subject_id" required="1"/>
+                                <field name="syllabus_doc" required="1"/>
+                            </group>
+                        </form>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+        <!-- ========================================= -->
+
+    </data>
+</odoo>

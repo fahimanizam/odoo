@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Change customer name to Student in account -->
+        <record id="inherited_res_partner_view_search" model="ir.ui.view">
+            <field name="name">inherit.res.partner.view.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.res_partner_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='customer']" position="replace">
+                    <filter string="Student Invoices" name="customer" domain="[('customer_rank','>', 0)]"/>
+                </xpath>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record model='ir.actions.act_window' id='account.res_partner_action_customer'>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new student in your address book
+                </p>
+                <p>
+                    Odoo helps you easily track all activities related to a student.
+                </p>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <!--   -->
+        <record id="account.action_account_invoice_report_all" model="ir.actions.act_window">
+            <field name="help">From this report, you can have an overview of the amount invoiced to your students. The
+                search tool can also be used to personalise your Invoices reports and so, match this analysis to your
+                needs.
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="account.action_move_out_invoice_type" model="ir.actions.act_window">
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a student invoice
+                </p>
+                <p>
+                    Create invoices, register payments and keep track of the discussions with your students.
+                </p>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="inherited_view_account_invoice_report_search" model="ir.ui.view">
+            <field name="name">inherited.view.account.invoice.report.search</field>
+            <field name="model">account.invoice.report</field>
+            <field name="inherit_id" ref="account.view_account_invoice_report_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='customer']" position="replace">
+                    <filter string="Students" name="customer"
+                            domain="['|', ('move_type','=','out_invoice'),('move_type','=','out_refund')]"/>
+                </xpath>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="inherited_view_account_payment_tree" model="ir.ui.view">
+            <field name="name">inherited.view.account.payment.tree</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id" string="Student"/>
+                </xpath>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <template id="inherited_template_account_1" name="custom template 1"
+                  inherit_id="account.report_payment_receipt_document">
+            <xpath expr="." position="inside">
+                <div class="col-6" t-if="o.partner_type">
+                    <t t-if="o.partner_type == 'customer'">
+                        <strong>Student:</strong>
+                    </t>
+                    <t t-if="o.partner_type == 'supplier'">
+                        <strong>Vendor:</strong>
+                    </t>
+                    <span t-field="o.partner_id"/>
+                </div>
+            </xpath>
+        </template>
+        <!--   -->
+        <!--   -->
+        <template id="inherited_template_account_2" name="custom template 2"
+                  inherit_id="account.report_invoice_document">
+            <xpath expr="." position="inside">
+                <div class="col-auto mw-100 mb-2" t-if="o.partner_id.ref" name="customer_code">
+                    <strong>Student Code:</strong>
+                    <p class="m-0" t-field="o.partner_id.ref"/>
+                </div>
+            </xpath>
+        </template>
+        <!--   -->
+        <!--   -->
+        <record id="inherited_view_account_journal_form" model="ir.ui.view">
+            <field name="name">inherited.view.account.journal.form</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="." position="inside">
+                    <group string="Follow Student Payments" attrs="{'invisible': [('type', '!=', 'sale')]}"/>
+                </xpath>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="inherited_view_invoice_tree" model="ir.ui.view">
+            <field name="name">inherited.view.invoice.tree</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_partner_display_name'][2]" position="replace">
+                    <field name="invoice_partner_display_name"
+                           invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund','out_receipt')"
+                           groups="base.group_user" string="Student"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_user_id']" position="replace">
+                    <field name="invoice_user_id" optional="hide"
+                           invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund','out_receipt')"
+                           string="Collections Person" widget="many2one_avatar_user"/>
+                </xpath>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="inherited_view_move_form" model="ir.ui.view">
+            <field name="name">inherited.view.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='partner_id']" position="replace">
+                    <label for="partner_id" string="Student" style="font-weight:bold;"
+                           attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund', 'out_receipt'))]}"/>
+                </xpath>
+
+                <xpath expr="//label[@for='ref']" position="replace">
+                    <label for="ref" string="Student Reference"/>
+                </xpath>
+
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="account.action_move_out_refund_type" model="ir.actions.act_window">
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a credit note
+                </p>
+                <p>
+                    Note that the easiest way to create a credit note is to do it directly
+                    from the student invoice.
+                </p>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="account.action_move_out_receipt_type" model="ir.actions.act_window">
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Collections receipt
+                </p>
+                <p>
+                    When the Collections receipt is confirmed, you can record the student
+                    payment related to this Collections receipt.
+                </p>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="inherited_view_payment_term_form" model="ir.ui.view">
+            <field name="name">inherited.view.payment.term.form</field>
+            <field name="model">account.payment.term</field>
+            <field name="inherit_id" ref="account.view_payment_term_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='note']" position="replace">
+                    <field name="note" placeholder="Payment term explanation for the student..."/>
+                </xpath>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="inherited_view_account_payment_search" model="ir.ui.view">
+            <field name="name">inherited.view.account.payment.search</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_search"/>
+            <field name="arch" type="xml">
+                <!--                        <xpath expr="." position="inside">-->
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id" string="Student/Vendor"/>
+                </xpath>
+                <xpath expr="//filter[@name='inbound_filter']" position="replace">
+                    <filter string="Student Payments"
+                            name="inbound_filter"
+                            domain="[('partner_type', '=', 'customer'), ('is_internal_transfer', '=', False)]"/>
+                </xpath>
+                <xpath expr="//filter[@name='partner']" position="replace">
+                    <filter string="Student/Vendor" name="partner" domain="[]" context="{'group_by': 'partner_id'}"/>
+                </xpath>
+            </field>
+        </record>
+        <!--        -->
+        <!--        -->
+        <record id="inherited_view_account_analytic_default_kanban" model="ir.ui.view">
+            <field name="name">inherited.view.account.analytic.default.kanban</field>
+            <field name="model">account.analytic.default</field>
+            <field name="inherit_id" ref="account.view_account_analytic_default_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']/parent::div" position="replace">
+                    <div t-if="record.partner_id.value">
+                        <strong>Student</strong>
+                        <field name="partner_id"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="inherited_account_journal_dashboard_kanban_view" model="ir.ui.view">
+            <field name="name">inherited.account.journal.dashboard.kanban</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//a[@name='open_collect_money']" position="replace">
+                    <a role="menuitem" type="object" name="open_collect_money">Student Payments</a>
+                </xpath>
+                <xpath expr="//a[@name='create_customer_payment']" position="replace">
+                    <a role="menuitem" type="object" name="create_customer_payment">Student Payment</a>
+                </xpath>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="inherited_res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">inherited.res.config.settings.view.form.inherit.account</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="40"/>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='eu_service']" position="replace">
+                    <div class="col-12 col-lg-6 o_setting_box" id="eu_service"
+                         title="If you're selling digital goods to students in the EU, you must charge VAT based on your students' locations. This rule applies regardless of you are located. Digital goods are defined in the legislation as broadcasting, telecommunications, and services that are electronically supplied instead of shipped. Gift cards sent online are not included in the definition.">
+                    </div>
+                </xpath>
+                <xpath expr="//h2[contains(text(),'Customer Invoices')]" position="replace">
+                    <h2>Student Invoices</h2>
+                </xpath>
+                <xpath expr="//div[contains(text(),'Get warnings when invoicing specific customers')]"
+                       position="replace">
+                    <div class="text-muted">
+                        Get warnings when invoicing specific students
+                    </div>
+                </xpath>
+                <xpath expr="//h2[contains(text(),'Customer Payments')]" position="replace">
+                    <h2>Student Payments</h2>
+                </xpath>
+                <xpath expr="//div[contains(text(),'Let your customers pay their invoices online')]" position="replace">
+                    <div class="text-muted">
+                        Let your students pay their invoices online
+                    </div>
+                </xpath>
+                <xpath expr="//div[@id='qr_code_invoices']" position="replace">
+                    <div class="col-xs-12 col-md-6 o_setting_box"
+                         id="qr_code_invoices"
+                         title="Add a QR-code to your invoices so that your students can pay instantly with their mobile banking application."></div>
+                </xpath>
+                <xpath expr="//div[contains(text(),'Collect customer payments in one-click using Euro SEPA Service')]"
+                       position="replace">
+                    <div class="text-muted">
+                        Collect student payments in one-click using Euro SEPA Service-->
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <!--   -->
+        <!--   -->
+        <record id="inherited_account_invoice_onboarding_sale_tax_form" model="ir.ui.view">
+            <field name="name">inherited.account.invoice.layout.onboarding.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="account.account_invoice_onboarding_sale_tax_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='account_sale_tax_id']" position="attributes">
+                    <attribute name="string">Collections Tax</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!--   -->
+        <!-- Manu item of account -->
+        <record model='ir.actions.act_window' id='account.res_partner_action_customer'>
+            <field name="name">Student</field>
+        </record>
+        <!--   -->
+        <record model='ir.ui.menu' id='account.menu_finance_receivables'>
+            <field name="name">Student</field>
+        </record>
+        <!--   -->
+        <record model='ir.ui.menu' id='account.menu_account_customer'>
+            <field name="name">Student</field>
+        </record>
+        <!--   -->
+        <!--   -->
+
+        <!--   -->
+
+    </data>
+</odoo>

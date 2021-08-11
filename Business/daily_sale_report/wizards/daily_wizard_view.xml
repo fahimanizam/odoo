@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="odoo_mo_daily_sales_form" model="ir.ui.view">
+            <field name="name">Daily Sales</field>
+            <field name="model">odoo.daily.sales</field>
+            <field name="arch" type="xml">
+                <form string="Daily Sales">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date_today"/>
+                                <field name="categ_id" widget="many2many"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Data">
+                                <field name="dailylines">
+                                    <tree>
+                                        <field name="categ"/>
+                                        <field name="product_name"/>
+                                        <field name="qty"/>
+                                        <field name="odate"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button name="daily_print_pdf"
+                                type="object"
+                                string="Print Pdf"
+                                class="oe_highlight"/>
+                        <button name="daily_preview"
+                                type="object"
+                                string="Preview"
+                                class="oe_highlight"/>
+                        <button special="cancel"
+                                string="Cancel"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="daily_sale_pdf_action">
+            <field name="name">Daily Sales</field>
+            <field name="res_model">odoo.daily.sales</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="odoo_mo_daily_sales_form"/>
+        </record>
+
+        <menuitem id="odoo_mo_daily_sales_menu" name="Daily Sales Report" parent="sale.menu_sale_report"
+                  action="daily_sale_pdf_action" groups="sales_team.group_sale_manager"/>
+
+    </data>
+</odoo>

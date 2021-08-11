@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+                id="item_receive_pdf_reportid"
+                model="item.receive.register"
+                report_type="qweb-pdf"
+                string=" Item Receive Register"
+                name="item_receive_register.item_receive_template_id"
+                file="item_receive_register.item_receive_template_id"
+        />
+
+    </data>
+</odoo>

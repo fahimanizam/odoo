@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="paperformat_euro" model="report.paperformat">
+        <field name="name">European A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+    <template id="student_evaluation_card">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="row">
+                            <div class="col-12">
+                                <table border="0px" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="pl-4">Name of the student:
+                                                <u>
+                                                    <t t-esc="doc.student_id.first_name"/>
+                                                    <t t-esc="doc.student_id.middle_name"/>
+                                                    <t t-esc="doc.student_id.last_name"/>
+                                                </u>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="pr-4">Student ID:
+                                                <u>
+                                                    <t t-esc="doc.student_id.id_number"/>
+                                                </u>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-4">Date of Birth:
+                                                <u>
+                                                    <t t-esc="doc.student_id.birth_date"/>
+                                                </u>
+                                            </td>
+                                            <td>Class:
+                                                <u>
+                                                    <t t-esc="doc.standard_id.name"/>
+                                                </u>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br/>
+                                <t t-set="categories" t-value="[]"/>
+                                <t t-foreach="doc.eval_line_ids" t-as="eval_line">
+                                    <t t-set="categories"
+                                       t-value="categories+[eval_line.stu_eval_id.category_id.category_name]"/>
+                                </t>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table borderless table-sm">
+                                            <t t-foreach="sorted(set(categories))" t-as="category">
+                                                <tr>
+                                                    <td colspan="3" class="pl-3">
+                                                        <div>
+                                                            <strong>
+                                                                <span t-esc="category"/>
+                                                            </strong>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <t t-foreach="doc.eval_line_ids" t-as="eval_line">
+                                                    <t t-if="category==eval_line.stu_eval_id.category_id.category_name">
+                                                        <tr>
+                                                            <td style="border: 1px solid black; width: 65%;"
+                                                                class="pl-5">
+                                                                <span t-field="eval_line.stu_eval_id.desc"/>
+                                                            </td>
+                                                            <!--                                                    <td style="font-family: 'Helvetica';font-size: 18px;border: 1px solid black;">-->
+                                                            <!--                                                        <t t-esc="eval_line.point_id.rating"/>-->
+                                                            <!--                                                    </td>-->
+                                                            <td style="border: 1px solid black;width: 35%;"
+                                                                class="text-center">
+                                                                <t t-esc="eval_line.rating"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <br/>
+                                <table class="table borderless table-sm text-center">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black; width: 65%;"
+                                                                class="pl-5">Total Attendance</th>
+                                            <th style="border: 1px solid black; width: 65%;"
+                                                                class="pl-5">Present</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: 1px solid black; width: 65%;">
+                                                <span t-esc="doc.total_attendance"/>
+                                            </td>
+                                            <td style="border: 1px solid black; width: 65%;">
+                                                <span t-esc="doc.present"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="border border-dark rounded mb-1">
+                                            <table class="table borderless mb-1" style="border-top: none;">
+                                                <tr>
+                                                    <td style="border-right: none;">
+                                                        <strong>Class Teacher's Remarks:</strong>
+                                                        <span t-field="doc.remarks"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <table class="table borderless table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2" style="border: 1px solid black;">Class Teachers Name:
+                                                <t t-esc="doc.teacher_id.name"/>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: 1px solid black;">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input"/>
+                                                    <span>Promoted to Grade</span>
+                                                </div>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input"/>
+                                                    <span>To Repeat</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2" class="align-middle" style="border: 1px solid black;">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span>Vice Principal's Signature:</span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <img src="" alt=""/>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle" style="border: 1px solid black;">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span>Founder Principal's Signature:</span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <img src="" alt=""/>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle" style="border: 1px solid black;">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span>Principal's Signature:</span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <img src="" alt=""/>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle" style="border: 1px solid black;">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <strong>Parent's Signature:</strong>
+                                                    </div>
+                                                    <div class="col">
+                                                        <img src="" alt=""/>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                                <strong>Next Term Begins on:</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

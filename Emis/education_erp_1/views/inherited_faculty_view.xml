@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+        <!-- The department option has been added in the faculty form-->
+        <record id="faculty_view_inherit" model="ir.ui.view">
+            <field name="name">faculty.view.inherit</field>
+            <field name="model">op.faculty</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_faculty_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='email']" position="after">
+                    <field name="faculty"/>
+                    <field name="department_id" domain="[('faculty_id','=',faculty)]"/>
+                </xpath>
+                <xpath expr="//page[@name='subjects']" position="replace">
+                    <page name="subjects" string="Subjects">
+                        <field name="faculty_subject_ids" colspan="4" nolabel="1" domain="[('department_id','=',department_id)]"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record model='ir.ui.menu' id='openeducat_core.menu_op_faculty_main'>
+            <field name="name">Faculty Members</field>
+        </record>
+
+        <record model='ir.actions.act_window' id='openeducat_core.act_open_op_faculty_view'>
+            <field name="name">Faculty Members</field>
+        </record>
+
+        <record model='ir.ui.menu' id='openeducat_core.menu_op_faculty_root'>
+            <field name="name">Faculty Members</field>
+        </record>
+
+    </data>
+</odoo>

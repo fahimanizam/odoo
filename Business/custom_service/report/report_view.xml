@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <report id="all_additional_exam_result_id_qweb"
+            string="Additional Exam Result"
+            model="all.additional.exam.result"
+            report_type="qweb-html"
+            file="custom_student_ems.additional_exam_result_report"
+            name="custom_student_ems.additional_exam_result_report"
+            groups="school.group_school_administration,school.group_school_teacher,school.group_school_student"/>
+</odoo>

@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_daily_subject_attendance,daily.subject.attendance,model_daily_subject_attendance,school.group_school_administration,1,1,1,1
+access_daily_subject_attendance1,daily.subject.attendance,model_daily_subject_attendance,school.group_school_parent,1,0,0,0
+access_daily_subject_attendance2,daily_subject.attendance,model_daily_subject_attendance,school.group_school_student,1,0,0,0
+access_daily_subject_attendance3,daily.subject.attendance,model_daily_subject_attendance,school.group_school_teacher,1,1,1,0
+
+access_daily_subject_attendance_line,daily.subject.attendance.line,model_daily_subject_attendance_line,school.group_school_administration,1,1,1,1
+access_daily_subject_attendance_line1,daily.subject.attendance.line,model_daily_subject_attendance_line,school.group_school_parent,1,0,0,0
+access_daily_subject_attendance_line2,daily.subject.attendance.line,model_daily_subject_attendance_line,school.group_school_student,1,0,0,0
+access_daily_subject_attendance_line3,daily.subject.attendance.line,model_daily_subject_attendance_line,school.group_school_teacher,1,1,1,0

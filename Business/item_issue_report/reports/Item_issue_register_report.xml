@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+                id="item_issue_pdf_reportid"
+                model="odoo.item.issue"
+                report_type="qweb-pdf"
+                string=" Item Issue Report"
+                name="item_issue_report.item_issue_template_id"
+                file="item_issue_report.item_issue_template_id"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ==========Edited Template========== -->
+        <template id="event.event_event_report_template_badge">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="event">
+                        <div class="row">
+                            <!-- Front -->
+                            <div class="col-6 text-center"
+                                 style="padding-left:7mm; border-right:1px dashed black; height: 149mm; padding-top: 7mm">
+                                <div class="row" t-ignore="true">
+                                    <div class="col-12">
+                                        <span t-if="event.organizer_id.company_id and event.organizer_id.company_id.logo_web">
+                                            <div t-field="event.event_logo">
+                                                <img t-att-src="image_data_uri(event.organizer_id.company_id.logo_web)"
+                                                     style="max-height:1cm; max-width:4cm;" alt="Logo"/>
+                                            </div>
+                                        </span>
+                                        <h4 t-field="event.name"/>
+                                        <h5>(
+                                            <i class="fa fa-clock-o" aria-label="Period" role="img"
+                                               title="Period"></i>
+                                            <span itemprop="startDate" t-field="event.date_begin"
+                                                  t-options='{"hide_seconds": True}'></span>
+                                            <i>to</i>
+                                            <span itemprop="endDate" t-field="event.date_end"
+                                                  t-options='{"hide_seconds": True}'></span>
+                                            )
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="row" t-ignore="true">
+                                    <div class="col-12 text-center" id="o_event_attendee_name">
+                                        <small>
+                                            <h3>Attendee Name</h3>
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div t-field="event.badge_front"></div>
+                                </div>
+                            </div>
+                            <!-- Back -->
+                            <div class="col-6" style="padding-right:7mm; height: 149mm; padding-top: 2mm;">
+                                <div t-field="event.badge_back"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Inner left -->
+                            <div class="col-6 text-center"
+                                 style="padding-right:7mm; border-top:1px dashed black; height: 148mm;">
+                                <div t-field="event.badge_innerleft"/>
+                            </div>
+                            <!-- Inner right -->
+                            <div class="col-6 text-center"
+                                 style="border-left:1px dashed black; border-top:1px dashed black; height: 148mm; text-center">
+                                <div t-field="event.badge_innerright"/>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </template>
+        <!-- ========================================= -->
+
+        <!-- =============Organizer id field changed from Template============= -->
+        <template id="inherited_event_description_full" inherit_id="website_event.event_description_full">
+            <xpath expr="/t[1]/t[1]/section[1]/div[1]/div[1]/div[2]/div[3]" position="replace">
+                <div t-if="event.organizer_id" class="o_wevent_sidebar_block">
+                    <h6 class="o_wevent_sidebar_title">Organizer</h6>
+                    <h4 t-field="event.organizer_id"/>
+                    <!--                    <div itemprop="location" t-field="event.organizer_id"-->
+                    <!--                         t-options="{'widget': 'contact', 'fields': ['phone', 'email']}"/>-->
+                </div>
+            </xpath>
+        </template>
+        <!-- ========================================= -->
+
+    </data>
+</odoo>
