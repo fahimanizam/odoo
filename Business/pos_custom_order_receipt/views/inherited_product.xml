@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Added warranty in product template -->
+        <record id="inherited_product_template_form_view" model="ir.ui.view">
+            <field name="name">inherited.product.template.common.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='options']" position="inside">
+                    <div>
+                        <div>
+                            <field name="warranty"/>
+                            <label for="warranty"/>
+
+                            <field name="year_type" widget="radio"
+                                   options="{'horizontal': true}"
+                                   attrs="{'required':[('warranty','=',True)],'invisible':[('warranty','!=',True)]}"/>
+
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <!-- // -->
+
+    </data>
+</odoo>
